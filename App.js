@@ -1,20 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+// import React, { useState } from "react";
+import HomeScreen from "./src/screens/HomeScreen";
+import GameScreen from "./src/screens/GameScreen";
+import InstructionsScreen from "./src/screens/InstructionsScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    // <HomeScreen label="Vurm" values={[START_GAME, INSTRUCTIONS]}></HomeScreen>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "Home" }}
+        />
+        <Stack.Screen name="Instructions" component={InstructionsScreen} />
+        <Stack.Screen
+          name="Start Game"
+          component={GameScreen}
+          options={{ title: "Vurm" }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default App;

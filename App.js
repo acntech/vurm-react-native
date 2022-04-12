@@ -1,6 +1,7 @@
 // import React, { useState } from "react";
 import HomeScreen from "./src/screens/HomeScreen";
 import GameScreen from "./src/screens/GameScreen";
+import { startGame, instructions } from "./src/screens/HomeScreen";
 import InstructionsScreen from "./src/screens/InstructionsScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -16,9 +17,9 @@ const App = () => {
           component={HomeScreen}
           options={{ title: "Home" }}
         />
-        <Stack.Screen name="Instructions" component={InstructionsScreen} />
+        <Stack.Screen name={instructions} component={InstructionsScreen} />
         <Stack.Screen
-          name="Start Game"
+          name={startGame}
           component={GameScreen}
           options={{ title: "Vurm" }}
         />

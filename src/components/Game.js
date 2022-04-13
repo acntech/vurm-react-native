@@ -17,5 +17,3 @@ export default class Game extends Component {
     );
   }
 }
-
-// export default Game;

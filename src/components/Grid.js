@@ -2,8 +2,9 @@ import { NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { FlatList, StyleSheet, View } from "react-native";
 import { coordToIdx, createCoord } from "../utilities/conversion";
 
-export default Grid = (snakeCoords) => {
-  const gridData = createGridData(snakeCoords);
+export default Grid = ({ snake }) => {
+  console.log(snake);
+  const gridData = createGridData(snake.getCoords());
   return (
     <FlatList
       style={styles.container}
@@ -15,12 +16,13 @@ export default Grid = (snakeCoords) => {
   );
 };
 
-const createGridData = ({ snakeCoords }) => {
-  let grid = new Array(NUM_COLUMNS * NUM_ROWS);
+const createGridData = (snakeCoords) => {
+  //   console.log(snakeCoords);
+  let gridData = new Array(NUM_COLUMNS * NUM_ROWS);
 
   for (let xx = 0; xx < NUM_COLUMNS; xx++) {
     for (let yy = 0; yy < NUM_ROWS; yy++) {
-      grid[coordToIdx(createCoord(xx, yy))] = {
+      gridData[coordToIdx(createCoord(xx, yy))] = {
         hasSnake: false,
         id: `(${xx},${yy})`,
       };
@@ -28,10 +30,10 @@ const createGridData = ({ snakeCoords }) => {
   }
 
   snakeCoords.forEach((coord) => {
-    grid[coordToIdx(coord)].hasSnake = true;
+    gridData[coordToIdx(coord)].hasSnake = true;
   });
 
-  return grid;
+  return gridData;
 };
 
 const renderBox = ({ item }) => (

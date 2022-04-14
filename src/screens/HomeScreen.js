@@ -11,8 +11,6 @@ export const instructions = "Instructions";
 
 const HomeScreen = ({ navigation }) => {
   const title = "Vurm";
-  // const startGame = "Start Game";
-  // const instructions = "Instructions";
 
   const buttonLabels = [startGame, instructions];
   return (

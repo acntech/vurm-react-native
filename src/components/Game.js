@@ -4,15 +4,25 @@ import Snake from "../classes/Snake";
 import Grid from "./Grid";
 
 export default class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.snake = new Snake();
+  state = {
+    snake: new Snake(),
+  };
+
+  componentDidMount() {
+    this._interval = setInterval(() => {
+      this.state.snake.tick();
+      this.setState({ snake: this.state.snake });
+    }, 3000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._interval);
   }
 
   render() {
     return (
       <View>
-        <Grid snakeCoords={this.snake.coords}></Grid>
+        <Grid snake={this.state.snake}></Grid>
       </View>
     );
   }

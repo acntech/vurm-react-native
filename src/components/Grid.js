@@ -26,7 +26,7 @@ const createGridData = ({ snakeCoords }) => {
       };
     }
   }
-  console.log(snakeCoords);
+
   snakeCoords.forEach((coord) => {
     grid[coordToIdx(coord)].hasSnake = true;
   });

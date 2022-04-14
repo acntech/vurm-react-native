@@ -6,13 +6,14 @@ import Grid from "./Grid";
 export default class Game extends Component {
   state = {
     snake: new Snake(),
+    tickIntervalMs: 1000,
   };
 
   componentDidMount() {
     this._interval = setInterval(() => {
       this.state.snake.tick();
       this.setState({ snake: this.state.snake });
-    }, 3000);
+    }, this.state.tickIntervalMs);
   }
 
   componentWillUnmount() {

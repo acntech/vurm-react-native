@@ -50,14 +50,6 @@ export default class Snake {
     return this.coords[1];
   }
 
-  tick() {
-    console.log("TICK!");
-    const newCoords = [...this.getCoords()];
-    newCoords.pop();
-    newCoords.push(this.getNextHead());
-    this.coords = newCoords;
-  }
-
   getNextHead() {
     const direction = this.getDirection();
     const { x, y } = this.getHead();
@@ -74,9 +66,17 @@ export default class Snake {
         throw new Error("Could not decide next head");
     }
   }
+
+  tick() {
+    console.log("TICK!");
+    const newCoords = [...this.getCoords()];
+    newCoords.pop();
+    newCoords.unshift(this.getNextHead());
+    this.coords = newCoords;
+  }
 }
 
-initializeCoords = () => {
+const initializeCoords = () => {
   const middleIdx =
     NUM_COLUMNS * Math.round(NUM_ROWS / 2) + Math.round(NUM_COLUMNS / 2);
   const middleCoord = idxToCoord(middleIdx);

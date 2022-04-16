@@ -11,3 +11,18 @@ export const idxToCoord = (i) => {
   const x = i - y * NUM_COLUMNS;
   return createCoord(x, y);
 };
+
+export const unicodeArrowToButtonLabelDirection = (unicodeArrow) => {
+  switch (unicodeArrow) {
+    case "↑":
+      return "U";
+    case "↓":
+      return "D";
+    case "←":
+      return "L";
+    case "→":
+      return "R";
+    default:
+      throw new Error("Unknown unicode arrow passed");
+  }
+};

@@ -7,13 +7,6 @@ export default class Snake {
     this.direction = "L";
   }
 
-  setDirection(newDirection) {
-    const validDirections = this.getValidDirections();
-    if (validDirections.includes(newDirection)) {
-      this.direction = newDirection;
-    }
-  }
-
   getValidDirections() {
     const preHead = this.getPreHead();
     const head = this.getHead();
@@ -21,16 +14,24 @@ export default class Snake {
     const dx = head.x - preHead.x;
     const dy = head.y - preHead.y;
 
-    if (dx < 0) {
+    if (dx > 0) {
       return ["U", "D", "R"];
-    } else if (dx > 0) {
+    } else if (dx < 0) {
       return ["U", "D", "L"];
-    } else if (dy > 0) {
-      return ["U", "R", "L"];
     } else if (dy < 0) {
+      return ["U", "R", "L"];
+    } else if (dy > 0) {
       return ["D", "R", "L"];
     } else {
       throw new Error("Could not decide invalid direction");
+    }
+  }
+
+  setDirection(newDirection) {
+    const validDirections = this.getValidDirections();
+    // const validDirections = ["U", "L", "D"];
+    if (validDirections.includes(newDirection)) {
+      this.direction = newDirection;
     }
   }
 
@@ -59,16 +60,16 @@ export default class Snake {
       case "R":
         return createCoord(x + 1, y);
       case "U":
-        return createCoord(x, y + 1);
-      case "D":
         return createCoord(x, y - 1);
+      case "D":
+        return createCoord(x, y + 1);
       default:
         throw new Error("Could not decide next head");
     }
   }
 
-  tick() {
-    console.log("TICK!");
+  move() {
+    // console.log("TICK!");
     const newCoords = [...this.getCoords()];
     newCoords.pop();
     newCoords.unshift(this.getNextHead());

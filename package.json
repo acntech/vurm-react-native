@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/hooks": "^2.8.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.1",
     "expo": "~44.0.0",
@@ -20,7 +21,6 @@
     "react-native": "0.64.3",
     "react-native-canvas": "^0.1.38",
     "react-native-screens": "~3.10.1",
-    "react-native-web": "0.17.1",
     "react-pixel-grid": "^0.1.2"
   },
   "devDependencies": {

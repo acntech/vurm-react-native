@@ -1,2 +1,2 @@
-export const NUM_COLUMNS = 25;
-export const NUM_ROWS = 25;
+export const NUM_COLUMNS = 30;
+export const NUM_ROWS = 30;

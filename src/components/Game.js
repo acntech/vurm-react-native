@@ -8,8 +8,9 @@ import Grid from "./Grid";
 export default class Game extends Component {
   state = {
     snake: new Snake(),
-    tickIntervalMs: 500,
+    tickIntervalMs: 100,
     gameOver: false,
+    ticks: 0,
   };
 
   componentDidMount() {
@@ -29,22 +30,36 @@ export default class Game extends Component {
 
     const goingOutOfBounds =
       x < 0 || x > NUM_COLUMNS - 1 || y < 0 || y > NUM_ROWS - 1;
-    const selfIntercepting = snake.getCoords().includes(nextHead);
+    const possibleIntercpetions = snake.getCoords().slice(0, -1);
 
-    return goingOutOfBounds || selfIntercepting;
+    const SelfIntercepting = possibleIntercpetions.some(
+      (e) => e.x == x && e.y == y
+    );
+
+    if (goingOutOfBounds) {
+      console.log("GOING OUT OF BOUNDS");
+    }
+    if (SelfIntercepting) {
+      console.log("SELF INTERCEPTING");
+    }
+    return goingOutOfBounds || SelfIntercepting;
   }
 
   tick() {
-    this.state.snake.move();
     this.setState({ gameOver: this.isGameOver() });
     if (this.state.gameOver) {
       clearInterval(this._interval);
+    } else {
+      this.state.snake.move();
+      this.forceUpdate();
     }
+    this.setState({ ticks: this.state.ticks + 1 });
   }
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        <Text style={styles.score}>Score: {this.state.ticks}</Text>
         <Grid snake={this.state.snake}></Grid>
         <Controller
           setDirection={this.state.snake.setDirection.bind(this.state.snake)}
@@ -56,9 +71,11 @@ export default class Game extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // justifyContent: "space-between",
     backgroundColor: "aliceblue",
     flex: 1,
-    // flexDirection: "column",
+  },
+  score: {
+    textAlign: "center",
+    // justifyContent: "center",
   },
 });

@@ -83,9 +83,14 @@ const initializeCoords = () => {
   const middleCoord = idxToCoord(middleIdx);
 
   const rawCoords = [
+    [middleCoord.x - 3, middleCoord.y],
+    [middleCoord.x - 2, middleCoord.y],
     [middleCoord.x - 1, middleCoord.y],
     [middleCoord.x, middleCoord.y],
     [middleCoord.x + 1, middleCoord.y],
+    [middleCoord.x + 2, middleCoord.y],
+    [middleCoord.x + 3, middleCoord.y],
+    [middleCoord.x + 4, middleCoord.y],
   ];
 
   return rawCoords.map((rawCoord) => createCoord(rawCoord[0], rawCoord[1]));

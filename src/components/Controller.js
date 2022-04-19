@@ -1,6 +1,5 @@
 import react from "react";
 import { View, StyleSheet } from "react-native";
-import Snake from "../classes/Snake";
 import ControllerButton from "./ControllerButton";
 import { unicodeArrowToButtonLabelDirection } from "../utilities/conversion";
 
@@ -16,7 +15,6 @@ export default Controller = ({ setDirection }) => {
                 key={buttonUnicodeArrow}
                 label={buttonUnicodeArrow}
                 onPress={() => {
-                  console.log(buttonUnicodeArrow);
                   setDirection(
                     unicodeArrowToButtonLabelDirection(buttonUnicodeArrow)
                   );
@@ -32,7 +30,7 @@ export default Controller = ({ setDirection }) => {
 
 const styles = new StyleSheet.create({
   container: {
-    backgroundColor: "aliceblue",
+    // backgroundColor: "aliceblue",
   },
   column: {
     flexDirection: "column",

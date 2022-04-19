@@ -1,14 +1,12 @@
 import { NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { FlatList, StyleSheet, View, Dimensions } from "react-native";
-// import { useDimensions } from "@react-native-community/hooks";
 import { coordToIdx, createCoord } from "../utilities/conversion";
 
-export default Grid = ({ snake }) => {
+export default Grid = ({ snakeCoords, berryCoord }) => {
   return (
     <FlatList
       style={styles.container}
-      // contentContainerStyle={{ flexGrow: 1 }}
-      data={createGridData(snake.getCoords())}
+      data={createGridData(snakeCoords, berryCoord)}
       renderItem={renderBox}
       numColumns={NUM_COLUMNS}
       keyExtractor={(item) => item.id}
@@ -16,13 +14,14 @@ export default Grid = ({ snake }) => {
   );
 };
 
-const createGridData = (snakeCoords) => {
+const createGridData = (snakeCoords, berryCoord) => {
   let gridData = new Array(NUM_COLUMNS * NUM_ROWS);
 
   for (let xx = 0; xx < NUM_COLUMNS; xx++) {
     for (let yy = 0; yy < NUM_ROWS; yy++) {
       gridData[coordToIdx(createCoord(xx, yy))] = {
         hasSnake: false,
+        hasBerry: false,
         id: `(${xx},${yy})`,
       };
     }
@@ -31,6 +30,10 @@ const createGridData = (snakeCoords) => {
   snakeCoords.forEach((coord) => {
     gridData[coordToIdx(coord)].hasSnake = true;
   });
+
+  if (berryCoord != null) {
+    gridData[coordToIdx(berryCoord)].hasBerry = true;
+  }
 
   return gridData;
 };
@@ -43,6 +46,7 @@ const renderBox = ({ item }) => {
         styles.item,
         { paddingVertical: Math.round(height / (4.5 * NUM_ROWS)) },
         item.hasSnake && styles.snakeBody,
+        item.hasBerry && styles.berry,
       ]}
     ></View>
   );
@@ -57,8 +61,9 @@ const styles = StyleSheet.create({
     backgroundColor: "coral",
     padding: 1,
     flexGrow: 1,
-    // marginVertical: 0.5,
-    // marginHorizontal: 0.5,
+    marginVertical: 0.5,
+    marginHorizontal: 0.5,
   },
   snakeBody: { backgroundColor: "white" },
+  berry: { backgroundColor: "purple" },
 });

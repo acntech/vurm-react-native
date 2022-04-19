@@ -5,6 +5,7 @@ export default class Snake {
   constructor() {
     this.coords = initializeCoords();
     this.direction = "L";
+    this.digestionCoords = [];
   }
 
   getValidDirections() {
@@ -29,7 +30,6 @@ export default class Snake {
 
   setDirection(newDirection) {
     const validDirections = this.getValidDirections();
-    // const validDirections = ["U", "L", "D"];
     if (validDirections.includes(newDirection)) {
       this.direction = newDirection;
     }
@@ -51,6 +51,10 @@ export default class Snake {
     return this.coords[1];
   }
 
+  getTail() {
+    return this.coords[this.coords.length - 1];
+  }
+
   getNextHead() {
     const direction = this.getDirection();
     const { x, y } = this.getHead();
@@ -69,11 +73,29 @@ export default class Snake {
   }
 
   move() {
-    // console.log("TICK!");
     const newCoords = [...this.getCoords()];
-    newCoords.pop();
+
+    const tail = this.getTail();
+    if (
+      this.digestionCoords.length > 0 &&
+      this.digestionCoords[0].x == tail.x &&
+      this.digestionCoords[0].y == tail.y
+    ) {
+      this.digestionCoords.pop();
+    } else {
+      newCoords.pop();
+    }
     newCoords.unshift(this.getNextHead());
     this.coords = newCoords;
+  }
+
+  eat(berry, berryEaten) {
+    const head = this.getHead();
+    if (head.x == berry.x && head.y == berry.y) {
+      console.log("YUM!");
+      this.digestionCoords.unshift(berry);
+      berryEaten();
+    }
   }
 }
 

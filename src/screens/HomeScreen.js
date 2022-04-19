@@ -5,13 +5,12 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
+import { title } from "../constants";
 
 export const startGame = "Start Game";
 export const instructions = "Instructions";
 
 const HomeScreen = ({ navigation }) => {
-  const title = "Vurm";
-
   const buttonLabels = [startGame, instructions];
   return (
     <SafeAreaView style={styles.container}>
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    // backgroundColor: "aliceblue",
   },
   column: {
     flexDirection: "column",

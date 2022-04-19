@@ -2,24 +2,19 @@ import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import Snake from "../classes/Snake";
 import { NUM_COLUMNS, NUM_ROWS } from "../constants";
-import { createCoord } from "../utilities/conversion";
 import { generateRandomCoord } from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";
+import { Alert } from "react-native";
 
 export default class Game extends Component {
-  state = {
-    snake: new Snake(),
-    berry: null,
-    tickIntervalMs: 50,
-    ticks: 0,
-    numBerriesEaten: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = getInitialState();
+  }
 
   componentDidMount() {
-    this._interval = setInterval(() => {
-      this.tick();
-    }, this.state.tickIntervalMs);
+    this.start();
   }
 
   componentWillUnmount() {
@@ -48,9 +43,51 @@ export default class Game extends Component {
     return goingOutOfBounds || selfIntercepting;
   }
 
+  gameOverPrompt() {
+    Alert.alert("Game Over!", `Your score: ${this.state.numBerriesEaten}`, [
+      {
+        text: "Exit",
+        onPress: () => this.props.navigation.goBack(),
+        // style: "cancel",
+      },
+      {
+        text: "Try Again",
+        onPress: () => {
+          this.reset();
+          this.start();
+        },
+      },
+    ]);
+  }
+
+  difficultySelectionPrompt() {
+    difficulties = [
+      { title: "Graduate", tickRateMs: 200 },
+      { title: "Analyst", tickRateMs: 100 },
+      { title: "Senior Analyst", tickRateMs: 50 },
+      { title: "Boss", tickRateMs: 25 },
+    ];
+    promise = new Promise((resolve) => {
+      Alert.alert(
+        "Choose difficulty",
+        null,
+        difficulties.map((difficulty) => ({
+          text: difficulty.title,
+          onPress: () => {
+            this.setState({ tickIntervalMs: difficulty.tickRateMs });
+            resolve();
+          },
+        }))
+      );
+    });
+
+    return promise;
+  }
+
   tick() {
     if (this.isGameOver()) {
       clearInterval(this._interval);
+      this.gameOverPrompt();
     } else {
       this.ensureBerryExistence();
       this.state.snake.move();
@@ -74,6 +111,17 @@ export default class Game extends Component {
     }
   }
 
+  reset() {
+    this.setState(getInitialState());
+  }
+
+  async start() {
+    await this.difficultySelectionPrompt();
+    this._interval = setInterval(() => {
+      this.tick();
+    }, this.state.tickIntervalMs);
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -89,6 +137,14 @@ export default class Game extends Component {
     );
   }
 }
+
+const getInitialState = () => ({
+  snake: new Snake(),
+  berry: null,
+  tickIntervalMs: 100,
+  ticks: 0,
+  numBerriesEaten: 0,
+});
 
 const styles = StyleSheet.create({
   container: {

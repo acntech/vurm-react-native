@@ -55,6 +55,7 @@ const renderBox = ({ item }) => {
 const styles = StyleSheet.create({
   container: {
     // backgroundColor: "coral",
+    // maxHeight: "30%",
   },
 
   item: {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Snake from "../classes/Snake";
-import { MIN_TICK_RATE, NUM_COLUMNS, NUM_ROWS } from "../constants";
+import { MIN_TICK_INTERVAL_MS, NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { generateRandomCoord } from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";
@@ -62,11 +62,10 @@ export default class Game extends Component {
 
   difficultySelectionPrompt() {
     difficulties = [
-      { title: "Graduate", tickRateMs: MIN_TICK_RATE * 5 },
-      { title: "Analyst", tickRateMs: MIN_TICK_RATE * 4 },
-      { title: "Senior Analyst", tickRateMs: MIN_TICK_RATE * 3 },
-      // { title: "Associate", tickRateMs: 25 },
-      { title: "BAWS", tickRateMs: MIN_TICK_RATE * 2 },
+      { title: "Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 5 },
+      { title: "Senior Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 4 },
+      { title: "Associate", tickIntervalMs: MIN_TICK_INTERVAL_MS * 3 },
+      { title: "BAWS", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
     ];
     return new Promise((resolve) => {
       Alert.alert(
@@ -75,7 +74,7 @@ export default class Game extends Component {
         difficulties.map((difficulty) => ({
           text: difficulty.title,
           onPress: () => {
-            this.setState({ tickIntervalMs: difficulty.tickRateMs });
+            this.setState({ tickIntervalMs: difficulty.tickIntervalMs });
             resolve();
           },
         }))
@@ -84,6 +83,7 @@ export default class Game extends Component {
   }
 
   tick() {
+    console.log("TICK");
     if (this.isGameOver() && !this.state.exiting) {
       clearInterval(this._interval);
       this.gameOverPrompt();
@@ -150,7 +150,7 @@ export default class Game extends Component {
 
 const getInitialState = () => ({
   snake: new Snake(),
-  berry: createCoord(5, 15),
+  berry: createCoord(2, 5),
   tickIntervalMs: 100,
   ticks: 0,
   numBerriesEaten: 0,

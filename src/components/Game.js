@@ -1,19 +1,20 @@
 import React, { Component } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Snake from "../classes/Snake";
-import { NUM_COLUMNS, NUM_ROWS } from "../constants";
+import { MIN_TICK_RATE, NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { generateRandomCoord } from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
+import { createCoord } from "../utilities/conversion";
 
 export default class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.state = getInitialState();
-  }
+  state = getInitialState();
 
   componentDidMount() {
+    this.props.navigation.addListener("transitionStart", () => {
+      clearInterval(this._interval);
+    });
     this.start();
   }
 
@@ -28,9 +29,9 @@ export default class Game extends Component {
 
     const goingOutOfBounds =
       x < 0 || x > NUM_COLUMNS - 1 || y < 0 || y > NUM_ROWS - 1;
-    const possibleIntercpetions = snake.getCoords().slice(0, -1);
+    const possibleInterceptions = snake.getCoords().slice(0, -1);
 
-    const selfIntercepting = possibleIntercpetions.some(
+    const selfIntercepting = possibleInterceptions.some(
       (e) => e.x == x && e.y == y
     );
 
@@ -48,7 +49,6 @@ export default class Game extends Component {
       {
         text: "Exit",
         onPress: () => this.props.navigation.goBack(),
-        // style: "cancel",
       },
       {
         text: "Try Again",
@@ -62,12 +62,13 @@ export default class Game extends Component {
 
   difficultySelectionPrompt() {
     difficulties = [
-      { title: "Graduate", tickRateMs: 200 },
-      { title: "Analyst", tickRateMs: 100 },
-      { title: "Senior Analyst", tickRateMs: 50 },
-      { title: "Boss", tickRateMs: 25 },
+      { title: "Graduate", tickRateMs: MIN_TICK_RATE * 5 },
+      { title: "Analyst", tickRateMs: MIN_TICK_RATE * 4 },
+      { title: "Senior Analyst", tickRateMs: MIN_TICK_RATE * 3 },
+      // { title: "Associate", tickRateMs: 25 },
+      { title: "BAWS", tickRateMs: MIN_TICK_RATE * 2 },
     ];
-    promise = new Promise((resolve) => {
+    return new Promise((resolve) => {
       Alert.alert(
         "Choose difficulty",
         null,
@@ -80,18 +81,16 @@ export default class Game extends Component {
         }))
       );
     });
-
-    return promise;
   }
 
   tick() {
-    if (this.isGameOver()) {
+    if (this.isGameOver() && !this.state.exiting) {
       clearInterval(this._interval);
       this.gameOverPrompt();
     } else {
       this.ensureBerryExistence();
       this.state.snake.move();
-      this.state.snake.eat(this.state.berry, this.berryEaten.bind(this));
+      this.state.snake.eat(this.state.berry, this.boundBerryEaten);
       this.setState({ ticks: this.state.ticks + 1 });
     }
   }
@@ -117,22 +116,33 @@ export default class Game extends Component {
 
   async start() {
     await this.difficultySelectionPrompt();
+    this.boundBerryEaten = () => this.berryEaten();
+    this.boundSetDirection = this.state.snake.setDirection.bind(
+      this.state.snake
+    );
     this._interval = setInterval(() => {
       this.tick();
     }, this.state.tickIntervalMs);
   }
 
+  stop() {}
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.score}>Score: {this.state.numBerriesEaten}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={[styles.score, { flex: 1 }]}>
+            Score: {this.state.numBerriesEaten}
+          </Text>
+          <Text style={[styles.score, { flex: 1 }]}>
+            Tick: {this.state.ticks}
+          </Text>
+        </View>
         <Grid
           snakeCoords={this.state.snake.getCoords()}
           berryCoord={this.state.berry}
         ></Grid>
-        <Controller
-          setDirection={this.state.snake.setDirection.bind(this.state.snake)}
-        ></Controller>
+        <Controller setDirection={this.boundSetDirection}></Controller>
       </SafeAreaView>
     );
   }
@@ -140,19 +150,18 @@ export default class Game extends Component {
 
 const getInitialState = () => ({
   snake: new Snake(),
-  berry: null,
+  berry: createCoord(5, 15),
   tickIntervalMs: 100,
   ticks: 0,
   numBerriesEaten: 0,
+  exiting: false,
 });
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "aliceblue",
     flex: 1,
   },
   score: {
     textAlign: "center",
-    // justifyContent: "center",
   },
 });

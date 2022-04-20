@@ -1,14 +1,12 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 
-const ControllerButton = ({ label, onPress }) => {
-  return (
-    <View>
-      <TouchableOpacity onPress={onPress} style={styles.button}>
-        <Text style={[styles.buttonLabel]}>{label}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+const ControllerButton = ({ label, onPress }) => (
+  <View>
+    <TouchableOpacity onPress={onPress} style={styles.button}>
+      <Text style={[styles.buttonLabel]}>{label}</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
   button: {

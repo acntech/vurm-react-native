@@ -12,4 +12,6 @@ export const generateRandomCoord = (invalidCoords) => {
       return idxToCoord(i);
     }
   }
+
+  // return idxToCoord(Math.floor(Math.random() * numIdxs));
 };

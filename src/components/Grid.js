@@ -1,5 +1,6 @@
 import { NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { FlatList, StyleSheet, View, Dimensions } from "react-native";
+import { Component, useState } from "react";
 import { coordToIdx, createCoord } from "../utilities/conversion";
 
 export default Grid = ({ snakeCoords, berryCoord }) => {
@@ -17,14 +18,12 @@ export default Grid = ({ snakeCoords, berryCoord }) => {
 const createGridData = (snakeCoords, berryCoord) => {
   let gridData = new Array(NUM_COLUMNS * NUM_ROWS);
 
-  for (let xx = 0; xx < NUM_COLUMNS; xx++) {
-    for (let yy = 0; yy < NUM_ROWS; yy++) {
-      gridData[coordToIdx(createCoord(xx, yy))] = {
-        hasSnake: false,
-        hasBerry: false,
-        id: `(${xx},${yy})`,
-      };
-    }
+  for (let i = 0; i < gridData.length; i++) {
+    gridData[i] = {
+      hasSnake: false,
+      hasBerry: false,
+      id: i,
+    };
   }
 
   snakeCoords.forEach((coord) => {
@@ -41,20 +40,34 @@ const createGridData = (snakeCoords, berryCoord) => {
 const renderBox = ({ item }) => {
   const height = Dimensions.get("window").height;
   return (
-    <View
+    <Box
+      item={item}
       style={[
         styles.item,
         { paddingVertical: Math.round(height / (4.5 * NUM_ROWS)) },
         item.hasSnake && styles.snakeBody,
         item.hasBerry && styles.berry,
       ]}
-    ></View>
+    ></Box>
   );
 };
 
+class Box extends Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.item.hasSnake != this.props.item.hasSnake ||
+      nextProps.item.hasBerry != this.props.item.hasBerry
+    );
+  }
+
+  render() {
+    return <View style={this.props.style}></View>;
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "coral",
+    backgroundColor: "coral",
     // maxHeight: "30%",
   },
 
@@ -62,8 +75,8 @@ const styles = StyleSheet.create({
     backgroundColor: "coral",
     padding: 1,
     flexGrow: 1,
-    // marginVertical: 0.5,
-    // marginHorizontal: 0.5,
+    marginVertical: 0.5,
+    marginHorizontal: 0.5,
   },
   snakeBody: { backgroundColor: "white" },
   berry: { backgroundColor: "purple" },

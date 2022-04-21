@@ -7,6 +7,7 @@ import MainMenuScreen, {
 import InstructionsScreen from "./src/screens/InstructionsScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { GAME_TITLE } from "./src/constants";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
         <Stack.Screen
           name={startGame}
           component={GameScreen}
-          options={{ title: "Vurm" }}
+          options={{ title: GAME_TITLE, gestureEnabled: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

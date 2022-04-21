@@ -6,10 +6,9 @@ import { generateRandomCoord } from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
-import { createCoord } from "../utilities/conversion";
 
 export default class Game extends Component {
-  state = getInitialState();
+  state = getInitialGameState();
 
   componentDidMount() {
     this.props.navigation.addListener("transitionStart", () => {
@@ -83,7 +82,6 @@ export default class Game extends Component {
   }
 
   tick() {
-    console.log("TICK");
     if (this.isGameOver() && !this.state.exiting) {
       clearInterval(this._interval);
       this.gameOverPrompt();
@@ -111,7 +109,7 @@ export default class Game extends Component {
   }
 
   reset() {
-    this.setState(getInitialState());
+    this.setState(getInitialGameState());
   }
 
   async start() {
@@ -148,14 +146,16 @@ export default class Game extends Component {
   }
 }
 
-const getInitialState = () => ({
-  snake: new Snake(),
-  berry: createCoord(2, 5),
-  tickIntervalMs: 100,
-  ticks: 0,
-  numBerriesEaten: 0,
-  exiting: false,
-});
+const getInitialGameState = () => {
+  const snake = new Snake();
+  return {
+    snake: snake,
+    berry: generateRandomCoord(snake.getCoords()),
+    tickIntervalMs: 100,
+    ticks: 0,
+    numBerriesEaten: 0,
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

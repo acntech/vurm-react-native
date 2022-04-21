@@ -15,3 +15,5 @@ export const generateRandomCoord = (invalidCoords) => {
 
   // return idxToCoord(Math.floor(Math.random() * numIdxs));
 };
+
+export const createCoord = (x, y) => ({ x: x, y: y });

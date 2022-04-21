@@ -1,9 +1,9 @@
 import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import instructions from "../../resources/instructions.json";
-import { title } from "../constants";
-const InstructionsScreen = (navigation) => (
+import { GAME_TITLE } from "../constants";
+const InstructionsScreen = () => (
   <SafeAreaView style={styles.container}>
-    <Text style={styles.header}>{title}</Text>
+    <Text style={styles.header}>{GAME_TITLE}</Text>
     <Text style={styles.body}>{instructions.body}</Text>
   </SafeAreaView>
 );

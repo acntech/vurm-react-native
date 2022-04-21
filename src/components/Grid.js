@@ -1,7 +1,7 @@
 import { NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { FlatList, StyleSheet, View, Dimensions } from "react-native";
-import { Component, useState } from "react";
-import { coordToIdx, createCoord } from "../utilities/conversion";
+import { Component } from "react";
+import { coordToIdx } from "../utilities/conversion";
 
 export default Grid = ({ snakeCoords, berryCoord }) => {
   return (
@@ -11,6 +11,7 @@ export default Grid = ({ snakeCoords, berryCoord }) => {
       renderItem={renderBox}
       numColumns={NUM_COLUMNS}
       keyExtractor={keyExtractor}
+      scrollEnabled={false}
     />
   );
 };

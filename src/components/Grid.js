@@ -10,10 +10,12 @@ export default Grid = ({ snakeCoords, berryCoord }) => {
       data={createGridData(snakeCoords, berryCoord)}
       renderItem={renderBox}
       numColumns={NUM_COLUMNS}
-      keyExtractor={(item) => item.id}
+      keyExtractor={keyExtractor}
     />
   );
 };
+
+const keyExtractor = (item) => item.id;
 
 const createGridData = (snakeCoords, berryCoord) => {
   let gridData = new Array(NUM_COLUMNS * NUM_ROWS);
@@ -44,7 +46,7 @@ const renderBox = ({ item }) => {
       item={item}
       style={[
         styles.item,
-        { paddingVertical: Math.round(height / (4.5 * NUM_ROWS)) },
+        { paddingVertical: height / (4.6 * NUM_ROWS) },
         item.hasSnake && styles.snakeBody,
         item.hasBerry && styles.berry,
       ]}

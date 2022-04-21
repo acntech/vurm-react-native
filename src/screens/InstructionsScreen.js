@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, View, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 import instructions from "../../resources/instructions.json";
 import { GAME_TITLE } from "../constants";
 const InstructionsScreen = () => (

@@ -5,16 +5,16 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
-import { title } from "../constants";
+import { GAME_TITLE } from "../constants";
 
-export const startGame = "Start Game";
-export const instructions = "Instructions";
+export const startGameLabel = "Start Game";
+export const instructionsLabel = "Instructions";
 
 const HomeScreen = ({ navigation }) => {
-  const buttonLabels = [startGame, instructions];
+  const buttonLabels = [startGameLabel, instructionsLabel];
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.label}>{title}</Text>
+      <Text style={styles.label}>{GAME_TITLE}</Text>
       <View style={styles.column}>
         {buttonLabels.map((buttonLabel) => (
           <TouchableOpacity
@@ -22,13 +22,13 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate(buttonLabel)}
             style={[
               styles.button,
-              buttonLabel === startGame && styles.primaryButton,
+              buttonLabel === startGameLabel && styles.primaryButton,
             ]}
           >
             <Text
               style={[
                 styles.buttonLabel,
-                buttonLabel === startGame && styles.primaryButtonLabel,
+                buttonLabel === startGameLabel && styles.primaryButtonLabel,
               ]}
             >
               {buttonLabel}

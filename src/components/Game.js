@@ -39,6 +39,7 @@ export default class Game extends Component {
     // }
     if (selfIntercepting) {
       console.log("SELF INTERCEPTING");
+      console.log(this.state.snake.getPreHead());
     }
     return selfIntercepting;
   }
@@ -140,7 +141,7 @@ export default class Game extends Component {
           snakeCoords={this.state.snake.getCoords()}
           berryCoord={this.state.berry}
         ></Grid>
-        <Controller setDirection={this.boundSetDirection}></Controller>
+        <Controller setSnakeDirection={this.boundSetDirection}></Controller>
       </SafeAreaView>
     );
   }

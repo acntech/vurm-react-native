@@ -15,13 +15,13 @@ export default class Snake {
     const dx = head.x - preHead.x;
     const dy = head.y - preHead.y;
 
-    if (dx > 0) {
+    if (dx == 1 || dx < -1) {
       return ["U", "D", "R"];
-    } else if (dx < 0) {
+    } else if (dx == -1 || dx > 1) {
       return ["U", "D", "L"];
-    } else if (dy < 0) {
+    } else if (dy == -1 || dy > 1) {
       return ["U", "R", "L"];
-    } else if (dy > 0) {
+    } else if (dy == 1 || dy < -1) {
       return ["D", "R", "L"];
     } else {
       throw new Error("Could not decide invalid direction");

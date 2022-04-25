@@ -1,8 +1,32 @@
-import react from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 import { unicodeArrowToButtonLabelDirection } from "../utilities/conversion";
 
-export default Controller = ({ setDirection }) => {
+export default Controller = ({ setSnakeDirection }) => {
+  const [directions, setDirections] = useState([]);
+
+  const handleOnPressIn = (direction) => {
+    if (!directions.includes(direction)) {
+      setDirections([...directions, direction]);
+      setSnakeDirection(direction);
+    }
+  };
+
+  const handleOnPressOut = (direction) => {
+    if (directions.length == 0) {
+      setSnakeDirection(direction);
+    }
+
+    var idx = directions.indexOf(direction);
+    if (idx !== -1) {
+      const newDirections = [...directions];
+      newDirections.splice(idx, 1);
+      setDirections(newDirections);
+      setSnakeDirection(newDirections[newDirections.length - 1]);
+    }
+  };
+
   const buttonRowUnicodeArrows = [["↑"], ["←", "→"], ["↓"]];
   return (
     <View style={styles.container}>
@@ -13,11 +37,16 @@ export default Controller = ({ setDirection }) => {
               <ControllerButton
                 key={buttonUnicodeArrow}
                 label={buttonUnicodeArrow}
-                onPress={() => {
-                  setDirection(
+                onPressIn={() =>
+                  handleOnPressIn(
                     unicodeArrowToButtonLabelDirection(buttonUnicodeArrow)
-                  );
-                }}
+                  )
+                }
+                onPressOut={() =>
+                  handleOnPressOut(
+                    unicodeArrowToButtonLabelDirection(buttonUnicodeArrow)
+                  )
+                }
               ></ControllerButton>
             ))}
           </View>
@@ -27,9 +56,13 @@ export default Controller = ({ setDirection }) => {
   );
 };
 
-const ControllerButton = ({ label, onPress }) => (
-  <View>
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+const ControllerButton = ({ label, onPressIn, onPressOut }) => (
+  <View onTouchStart={onPressIn} onTouchEnd={onPressOut}>
+    <TouchableOpacity
+      style={styles.button}
+      // onPressIn={() => onPressIn()}
+      // onPressOut={() => onPressOut()}
+    >
       <Text style={[styles.buttonLabel]}>{label}</Text>
     </TouchableOpacity>
   </View>

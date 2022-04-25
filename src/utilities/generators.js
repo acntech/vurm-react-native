@@ -1,4 +1,5 @@
 import { NUM_COLUMNS, NUM_ROWS } from "../constants";
+import { constainsCoord } from "./comparison";
 import { idxToCoord } from "./conversion";
 import shuffle from "./shuffle";
 
@@ -8,8 +9,8 @@ export const generateRandomCoord = (invalidCoords) => {
   shuffle(idxs);
   for (let i of idxs) {
     const candidate = idxToCoord(i);
-    if (!invalidCoords.some((e) => e.x == candidate.x && e.y == candidate.y)) {
-      return idxToCoord(i);
+    if (!constainsCoord(invalidCoords, candidate)) {
+      return candidate;
     }
   }
 

@@ -1,6 +1,6 @@
 import { NUM_COLUMNS, NUM_ROWS } from "../constants";
 import { createCoord, idxToCoord } from "../utilities/conversion";
-
+import { isEqualCoords } from "../utilities/comparison";
 export default class Snake {
   constructor() {
     this.coords = initializeCoords();
@@ -75,12 +75,7 @@ export default class Snake {
   move() {
     const newCoords = [...this.getCoords()];
 
-    const tail = this.getTail();
-    if (
-      this.digestionCoords.length > 0 &&
-      this.digestionCoords[0].x == tail.x &&
-      this.digestionCoords[0].y == tail.y
-    ) {
+    if (isEqualCoords(this.digestionCoords, this.getTail())) {
       this.digestionCoords.pop();
     } else {
       newCoords.pop();
@@ -91,7 +86,7 @@ export default class Snake {
 
   eat(berry, berryEaten) {
     const head = this.getHead();
-    if (head.x == berry.x && head.y == berry.y) {
+    if (isEqualCoords(berry, head)) {
       console.log("YUM!");
       this.digestionCoords.unshift(berry);
       berryEaten();

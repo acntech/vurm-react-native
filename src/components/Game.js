@@ -26,21 +26,21 @@ export default class Game extends Component {
     const nextHead = snake.getNextHead();
     const { x, y } = nextHead;
 
-    const goingOutOfBounds =
-      x < 0 || x > NUM_COLUMNS - 1 || y < 0 || y > NUM_ROWS - 1;
+    // const goingOutOfBounds =
+    // x < 0 || x > NUM_COLUMNS - 1 || y < 0 || y > NUM_ROWS - 1;
     const possibleInterceptions = snake.getCoords().slice(0, -1);
 
     const selfIntercepting = possibleInterceptions.some(
       (e) => e.x == x && e.y == y
     );
 
-    if (goingOutOfBounds) {
-      console.log("GOING OUT OF BOUNDS");
-    }
+    // if (goingOutOfBounds) {
+    //   console.log("GOING OUT OF BOUNDS");
+    // }
     if (selfIntercepting) {
       console.log("SELF INTERCEPTING");
     }
-    return goingOutOfBounds || selfIntercepting;
+    return selfIntercepting;
   }
 
   gameOverPrompt() {

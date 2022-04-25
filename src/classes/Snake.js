@@ -60,13 +60,13 @@ export default class Snake {
     const { x, y } = this.getHead();
     switch (direction) {
       case "L":
-        return createCoord(x - 1, y);
+        return createCoord((NUM_COLUMNS + x - 1) % NUM_COLUMNS, y % NUM_ROWS);
       case "R":
-        return createCoord(x + 1, y);
+        return createCoord((NUM_COLUMNS + x + 1) % NUM_COLUMNS, y % NUM_ROWS);
       case "U":
-        return createCoord(x, y - 1);
+        return createCoord(x % NUM_COLUMNS, (NUM_ROWS + y - 1) % NUM_ROWS);
       case "D":
-        return createCoord(x, y + 1);
+        return createCoord(x % NUM_COLUMNS, (NUM_ROWS + y + 1) % NUM_ROWS);
       default:
         throw new Error("Could not decide next head");
     }

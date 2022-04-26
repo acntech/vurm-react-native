@@ -75,7 +75,12 @@ export default class Snake {
   move() {
     const newCoords = [...this.getCoords()];
 
-    if (isEqualCoords(this.digestionCoords, this.getTail())) {
+    if (
+      isEqualCoords(
+        this.digestionCoords[this.digestionCoords.length - 1],
+        this.getTail()
+      )
+    ) {
       this.digestionCoords.pop();
     } else {
       newCoords.pop();
@@ -100,13 +105,13 @@ export const initializeSnakeCoords = () => {
   const middleCoord = idxToCoord(middleIdx);
 
   const rawCoords = [
-    [middleCoord.x - 2, middleCoord.y],
+    // [middleCoord.x - 2, middleCoord.y],
     [middleCoord.x - 1, middleCoord.y],
     [middleCoord.x, middleCoord.y],
     [middleCoord.x + 1, middleCoord.y],
-    [middleCoord.x + 2, middleCoord.y],
-    [middleCoord.x + 3, middleCoord.y],
-    [middleCoord.x + 4, middleCoord.y],
+    // [middleCoord.x + 2, middleCoord.y],
+    // [middleCoord.x + 3, middleCoord.y],
+    // [middleCoord.x + 4, middleCoord.y],
   ];
 
   const [x_idx, y_idx] = [0, 1];

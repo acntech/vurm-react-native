@@ -32,7 +32,6 @@ export default class Game extends Component {
 
     if (selfIntercepting) {
       console.log("SELF INTERCEPTING");
-      console.log(this.state.snake.getPreHead());
     }
     return selfIntercepting;
   }

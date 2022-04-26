@@ -121,7 +121,6 @@ exports[`<App /> renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "coral",
                       "fontSize": 16,
                       "fontWeight": "400",
                       "textAlign": "center",
@@ -150,6 +149,7 @@ exports[`<App /> renders correctly 1`] = `
                   "alignSelf": "center",
                   "backgroundColor": "oldlace",
                   "borderRadius": 4,
+                  "borderWidth": 0,
                   "marginBottom": 5,
                   "minWidth": "50%",
                   "opacity": 1,
@@ -162,12 +162,13 @@ exports[`<App /> renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "coral",
                       "fontSize": 16,
                       "fontWeight": "400",
                       "textAlign": "center",
                     },
-                    false,
+                    Object {
+                      "color": "coral",
+                    },
                   ]
                 }
               >

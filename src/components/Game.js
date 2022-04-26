@@ -6,6 +6,7 @@ import { generateRandomCoord } from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
+import { constainsCoord } from "../utilities/comparison";
 
 export default class Game extends Component {
   state = getInitialGameState();
@@ -24,19 +25,11 @@ export default class Game extends Component {
   isGameOver() {
     const snake = this.state.snake;
     const nextHead = snake.getNextHead();
-    const { x, y } = nextHead;
 
-    // const goingOutOfBounds =
-    // x < 0 || x > NUM_COLUMNS - 1 || y < 0 || y > NUM_ROWS - 1;
     const possibleInterceptions = snake.getCoords().slice(0, -1);
 
-    const selfIntercepting = possibleInterceptions.some(
-      (e) => e.x == x && e.y == y
-    );
+    const selfIntercepting = constainsCoord(possibleInterceptions, nextHead);
 
-    // if (goingOutOfBounds) {
-    //   console.log("GOING OUT OF BOUNDS");
-    // }
     if (selfIntercepting) {
       console.log("SELF INTERCEPTING");
       console.log(this.state.snake.getPreHead());
@@ -62,7 +55,7 @@ export default class Game extends Component {
 
   difficultySelectionPrompt() {
     difficulties = [
-      { title: "Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 5 },
+      { title: "Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 10 },
       { title: "Senior Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 4 },
       { title: "Associate", tickIntervalMs: MIN_TICK_INTERVAL_MS * 3 },
       { title: "BAWS", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
@@ -124,11 +117,9 @@ export default class Game extends Component {
     }, this.state.tickIntervalMs);
   }
 
-  stop() {}
-
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} testID={"Game"}>
         <View style={{ flexDirection: "row" }}>
           <Text style={[styles.score, { flex: 1 }]}>
             Score: {this.state.numBerriesEaten}

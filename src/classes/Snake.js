@@ -3,7 +3,7 @@ import { createCoord, idxToCoord } from "../utilities/conversion";
 import { isEqualCoords } from "../utilities/comparison";
 export default class Snake {
   constructor() {
-    this.coords = initializeCoords();
+    this.coords = initializeSnakeCoords();
     this.direction = "L";
     this.digestionCoords = [];
   }
@@ -94,13 +94,12 @@ export default class Snake {
   }
 }
 
-const initializeCoords = () => {
+export const initializeSnakeCoords = () => {
   const middleIdx =
     NUM_COLUMNS * Math.round(NUM_ROWS / 2) + Math.round(NUM_COLUMNS / 2);
   const middleCoord = idxToCoord(middleIdx);
 
   const rawCoords = [
-    [middleCoord.x - 3, middleCoord.y],
     [middleCoord.x - 2, middleCoord.y],
     [middleCoord.x - 1, middleCoord.y],
     [middleCoord.x, middleCoord.y],
@@ -110,5 +109,8 @@ const initializeCoords = () => {
     [middleCoord.x + 4, middleCoord.y],
   ];
 
-  return rawCoords.map((rawCoord) => createCoord(rawCoord[0], rawCoord[1]));
+  const [x_idx, y_idx] = [0, 1];
+  return rawCoords.map((rawCoord) =>
+    createCoord(rawCoord[x_idx], rawCoord[y_idx])
+  );
 };

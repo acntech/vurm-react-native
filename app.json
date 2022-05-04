@@ -28,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "facebookScheme": "fb498173242097723",
+    "facebookAppId":"498173242097723",
+    "facebookDisplayName": "Vurm",
+    "facebookAdvertiserIDCollectionEnabled": false,
+    "facebookAutoLogAppEventsEnabled": false
   }
 }

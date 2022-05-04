@@ -1,19 +1,24 @@
 import { View, Text, Button } from "react-native";
-import { useEffect } from "react";
 import loginWithFacebook from "../highscore/init";
 import { getAuth, signOut } from "firebase/auth";
+import { useState } from "react";
 
 const HighscoresScreen = () => {
   const auth = getAuth();
   const user = auth.currentUser;
+
+  const [message, setMessage] = useState("");
   return (
     <View>
       {!user ? (
-        <Button
-          style={{ alignSelf: "center" }}
-          title={"Login"}
-          onPress={loginWithFacebook}
-        ></Button>
+        <View>
+          <Text>{message}</Text>
+          <Button
+            style={{ alignSelf: "center" }}
+            title={"Login"}
+            onPress={() => loginWithFacebook(setMessage)}
+          ></Button>
+        </View>
       ) : (
         <View>
           <Text style={{ alignSelf: "center" }}>

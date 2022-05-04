@@ -38,13 +38,12 @@ onAuthStateChanged(auth, (user) => {
   // Do other things
 });
 
-async function loginWithFacebook() {
-  const appId = "674426183529757";
+async function loginWithFacebook(setMessage) {
+  const appId = "498173242097723";
   await Facebook.initializeAsync({ appId });
 
   const { type, token } = await Facebook.logInWithReadPermissionsAsync({
     permissions: ["public_profile"],
-    behavior: "web",
   });
 
   if (type === "success") {
@@ -54,6 +53,7 @@ async function loginWithFacebook() {
     // Sign in with credential from the Facebook user.
     signInWithCredential(auth, credential).catch((error) => {
       console.log(error);
+      setMessage(error.toString());
     });
   }
   // return auth;

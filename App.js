@@ -8,6 +8,11 @@ import InstructionsScreen from "./src/screens/InstructionsScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GAME_TITLE } from "./src/constants";
+import HighscoresScreen from "./src/screens/HighscoresScreen";
+import { LogBox } from "react-native";
+
+// firebase has yet to fix this, see https://github.com/firebase/firebase-js-sdk/issues/1847
+LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -25,6 +30,11 @@ const App = () => {
           component={GameScreen}
           options={{ title: GAME_TITLE, gestureEnabled: false }}
         />
+        <Stack.Screen
+          name={"Highscores"}
+          component={HighscoresScreen}
+          options={{ title: "Highscores" }}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

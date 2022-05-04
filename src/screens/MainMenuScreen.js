@@ -9,10 +9,12 @@ import { GAME_TITLE } from "../constants";
 
 export const startGameLabel = "Start Game";
 export const instructionsLabel = "Instructions";
+export const highscoresLabel = "Highscores";
 
 const MainMenuScreen = ({ navigation }) => {
   const navigateToGame = () => navigation.navigate(startGameLabel);
   const navigateToInstructions = () => navigation.navigate(instructionsLabel);
+  const navigateToHighscores = () => navigation.navigate(highscoresLabel);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,6 +32,12 @@ const MainMenuScreen = ({ navigation }) => {
           buttonStyle={styles.instructionsButton}
           labelStyle={styles.instructionsButtonLabel}
         />
+        <MainMenuButton
+          onPress={navigateToHighscores}
+          label={highscoresLabel}
+          buttonStyle={styles.instructionsButton}
+          labelStyle={styles.instructionsButtonLabel}
+        ></MainMenuButton>
       </View>
     </SafeAreaView>
   );

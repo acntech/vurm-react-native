@@ -44,6 +44,7 @@ async function loginWithFacebook() {
 
   const { type, token } = await Facebook.logInWithReadPermissionsAsync({
     permissions: ["public_profile"],
+    behavior: "web",
   });
 
   if (type === "success") {

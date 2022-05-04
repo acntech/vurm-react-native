@@ -2,6 +2,7 @@ import { View, Text, Button } from "react-native";
 import loginWithFacebook from "../highscore/init";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
+import { storeHighScore } from "../highscore/rtdb";
 
 const HighscoresScreen = () => {
   const auth = getAuth();
@@ -28,6 +29,7 @@ const HighscoresScreen = () => {
             style={{ alignSelf: "center" }}
             title={"Logout"}
             onPress={() => {
+              // storeHighScore(user, 42);
               signOut(auth)
                 .then(() => {
                   // signed out successfully

@@ -1,24 +1,26 @@
 import { View, Text, Button } from "react-native";
-import loginWithFacebook from "../highscore/init";
+import loginWithFacebook from "../auth/facebook";
 import { getAuth, signOut } from "firebase/auth";
-import { useState } from "react";
 import { storeHighScore } from "../highscore/rtdb";
-
+import { FacebookSocialButton } from "react-native-social-buttons";
 const HighscoresScreen = () => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const [message, setMessage] = useState("");
+  const onPressLoginWithFacebook = () => loginWithFacebook();
+  const onPressSignOut = () => {
+    signOut(auth)
+      .then(() => {})
+      .catch((error) => {});
+  };
   return (
     <View>
       {!user ? (
         <View>
-          <Text>{message}</Text>
-          <Button
-            style={{ alignSelf: "center" }}
-            title={"Login"}
-            onPress={() => loginWithFacebook(setMessage)}
-          ></Button>
+          <FacebookSocialButton
+            buttonViewStyle={{ alignSelf: "center" }}
+            onPress={onPressLoginWithFacebook}
+          ></FacebookSocialButton>
         </View>
       ) : (
         <View>
@@ -27,17 +29,8 @@ const HighscoresScreen = () => {
           </Text>
           <Button
             style={{ alignSelf: "center" }}
-            title={"Logout"}
-            onPress={() => {
-              // storeHighScore(user, 42);
-              signOut(auth)
-                .then(() => {
-                  // signed out successfully
-                })
-                .catch((error) => {
-                  // what now?
-                });
-            }}
+            title={"Sign Out"}
+            onPress={onPressSignOut}
           ></Button>
         </View>
       )}

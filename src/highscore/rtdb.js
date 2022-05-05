@@ -17,7 +17,6 @@ function setupHighscoreListener(user) {
     const db = getDatabase();
     const reference = ref(db, "users/" + user);
     onValue(reference, (snapshot) => {
-      s;
       const highscore = snapshot.val().highscore;
       console.log("New high score: " + highscore);
     });

@@ -1,4 +1,9 @@
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, onValue, set, get } from "firebase/database";
+
+export const getAllHighScores = async () => {
+  const reference = ref(db, "users/");
+  return await get(reference);
+};
 
 export const storeHighScore = (user, score) => {
   console.log(user);

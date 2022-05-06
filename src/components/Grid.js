@@ -3,18 +3,16 @@ import { FlatList, StyleSheet, View, Dimensions } from "react-native";
 import { Component } from "react";
 import { coordToIdx } from "../utilities/conversion";
 
-export default Grid = ({ snakeCoords, berryCoord }) => {
-  return (
-    <FlatList
-      style={styles.container}
-      data={createGridData(snakeCoords, berryCoord)}
-      renderItem={renderBox}
-      numColumns={NUM_COLUMNS}
-      keyExtractor={keyExtractor}
-      scrollEnabled={false}
-    />
-  );
-};
+export default Grid = ({ snakeCoords, berryCoord }) => (
+  <FlatList
+    style={styles.container}
+    data={createGridData(snakeCoords, berryCoord)}
+    renderItem={renderBox}
+    numColumns={NUM_COLUMNS}
+    keyExtractor={keyExtractor}
+    scrollEnabled={false}
+  />
+);
 
 const keyExtractor = (item) => item.id;
 

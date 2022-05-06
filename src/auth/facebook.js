@@ -3,7 +3,7 @@ import { auth } from "./firebase";
 import { FacebookAuthProvider, signInWithCredential } from "firebase/auth";
 import * as Facebook from "expo-facebook";
 
-async function loginWithFacebook() {
+async function loginWithFacebook(setUser) {
   const appId = "498173242097723";
   await Facebook.initializeAsync({ appId });
 
@@ -16,9 +16,11 @@ async function loginWithFacebook() {
     const credential = FacebookAuthProvider.credential(token);
 
     // Sign in with credential from the Facebook user.
-    signInWithCredential(auth, credential).catch((error) => {
-      console.log(error);
-    });
+    signInWithCredential(auth, credential)
+      .then(() => setUser(auth.currentUser))
+      .catch((error) => {
+        console.log(error);
+      });
   }
   // return auth;
 }

@@ -1,12 +1,12 @@
 import { SafeAreaView } from "react-native";
 
 import HighscoreTable from "../components/HighscoreTable";
-import LogInOutButton from "../components/LogInOutButton";
+import Social from "../components/Social";
 const HighscoresScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HighscoreTable></HighscoreTable>
-      <LogInOutButton></LogInOutButton>
+      <Social></Social>
     </SafeAreaView>
   );
 };

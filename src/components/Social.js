@@ -3,8 +3,9 @@ import loginWithFacebook from "../auth/facebook";
 import { getAuth, signOut } from "firebase/auth";
 import { FacebookSocialButton } from "react-native-social-buttons";
 import { useState } from "react";
+import { deleteUserData } from "../highscore/rtdb";
 
-export default LogInOutButton = () => {
+export default Social = () => {
   const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
   const [loginButtonDisabled, setLoginButtonDisabled] = useState(false);
@@ -23,6 +24,25 @@ export default LogInOutButton = () => {
           },
         ]);
       });
+  };
+  const onPressDeleteMyData = () => {
+    Alert.alert(
+      "Are you sure you wish to delete your data?",
+      "This can't be undone",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            deleteUserData(auth.currentUser);
+          },
+          style: "destructive",
+        },
+      ]
+    );
   };
 
   return (
@@ -44,6 +64,12 @@ export default LogInOutButton = () => {
             style={{ alignSelf: "center" }}
             title={"Sign Out"}
             onPress={onPressSignOut}
+          ></Button>
+          <Button
+            style={{ alignSelf: "center" }}
+            title={"Delete My Data"}
+            color={"red"}
+            onPress={onPressDeleteMyData}
           ></Button>
         </View>
       )}

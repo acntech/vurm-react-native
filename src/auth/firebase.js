@@ -18,6 +18,7 @@ initializeApp(firebaseConfig);
 onAuthStateChanged(getAuth(), (user) => {
   if (user != null) {
     console.log("We are authenticated now!");
+    // console.log(user);
   }
 });
 

@@ -1,8 +1,8 @@
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { Table, Row, Rows } from "react-native-table-component";
-
+import { processUsersSnapshot } from "../highscore/rtdb";
 // users: {
 //     "<uid_1>": {
 //         "name": "Bro Sor",
@@ -17,11 +17,11 @@ import { Table, Row, Rows } from "react-native-table-component";
 export default HighscoreTable = () => {
   const [data, setData] = useState();
   const db = getDatabase();
-  const reference = ref(db, "users/");
+  const usersReference = ref(db, "users/");
   useEffect(() => {
-    const unsubscribe = onValue(reference, (snapshot) => {
-      const snapshotData = processUsersSnapshot(snapshot);
-      setData(snapshotData);
+    const unsubscribe = onValue(usersReference, (usersSnapshot) => {
+      const usersSnapshotData = processUsersSnapshot(usersSnapshot);
+      setData(usersSnapshotData);
     });
     return unsubscribe;
   }, []);
@@ -42,18 +42,6 @@ export default HighscoreTable = () => {
       </Table>
     </View>
   );
-};
-
-const processUsersSnapshot = (usersSnapshot) => {
-  processedData = [];
-  if (!usersSnapshot.hasChildren()) {
-    return processedData;
-  }
-  usersSnapshot.forEach((child) => {
-    const childValue = child.val();
-    processedData.push([childValue?.name, childValue?.score]);
-  });
-  return processedData;
 };
 
 const styles = StyleSheet.create({

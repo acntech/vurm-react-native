@@ -7,6 +7,8 @@ import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
 import { constainsCoord } from "../utilities/comparison";
+import { getUserScore } from "../highscore/rtdb";
+import { auth } from "../auth/firebase";
 
 export default class Game extends Component {
   state = getInitialGameState();
@@ -116,7 +118,22 @@ export default class Game extends Component {
     }, this.state.tickIntervalMs);
   }
 
+  createHighscoreText(user) {
+    highscore_text = "";
+    if (!user) {
+      highscore_text = "Log in to view highscore";
+    } else {
+      highscore = getUserScore(user);
+      if (!highscore) {
+        highscore_text = "Failed to retreive highscore";
+      } else {
+        highscore_text = `Highscore: ${highscore}$`;
+      }
+    }
+    return highscore_text;
+  }
   render() {
+    user = auth?.currentUser;
     return (
       <SafeAreaView style={styles.container} testID={"Game"}>
         <View style={{ flexDirection: "row" }}>
@@ -124,8 +141,11 @@ export default class Game extends Component {
             Score: {this.state.numBerriesEaten}
           </Text>
           <Text style={[styles.score, { flex: 1 }]}>
-            Tick: {this.state.ticks}
+            {this.createHighscoreText(user)}
           </Text>
+          {/* <Text style={[styles.score, { flex: 1 }]}>
+            Tick: {this.state.ticks}
+          </Text> */}
         </View>
         <Grid
           snakeCoords={this.state.snake.getCoords()}

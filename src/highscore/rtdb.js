@@ -1,16 +1,23 @@
-import { async } from "@firebase/util";
-import { getDatabase, ref, onValue, set, get, remove } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  get,
+  remove,
+  child,
+} from "firebase/database";
 
-export const getAllHighScores = async () => {
+export const getAllHighScores = () => {
   const reference = ref(db, "users/");
-  return await get(reference);
+  return get(reference);
 };
 
-export const deleteUserData = async (user) => {
+export const deleteUserData = (user) => {
   if (user != null) {
     const db = getDatabase();
     const reference = ref(db, "users/" + user.uid);
-    await remove(reference);
+    remove(reference);
   }
 };
 
@@ -19,18 +26,28 @@ export const setUserHighscore = async (user, score) => {
     const db = getDatabase();
     const reference = ref(db, "users/" + user.uid);
     await set(reference, {
-      name: user.dispalyName,
+      name: user.displayName,
       score: score,
     });
   }
 };
 
-export const getUserHighscore = async (user) => {
+export const getUserScore = (user) => {
+  const highscore = null;
   if (user != null) {
     const db = getDatabase();
     const reference = ref(db, "users/" + user.uid);
-    return await get(reference);
+    get(child(reference, "score"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          highscore = snapshot.val();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+  return highscore;
 };
 
 export const processUsersSnapshot = (usersSnapshot) => {

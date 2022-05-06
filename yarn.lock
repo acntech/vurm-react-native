@@ -6609,10 +6609,9 @@ react-native-screens@~3.10.1:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
-react-native-social-buttons@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-social-buttons/-/react-native-social-buttons-1.2.0.tgz#70500b3506f3fe565bf500af59485dfdcc7ac450"
-  integrity sha512-/yLVsCflrBdVBjHhKXmPCrHCyX2FMEZcpO2EMlMDvSBopu8WRJBxaXLXkiDeJZC6EMRmwRM1fn9uEnmkMXshMg==
+"react-native-social-buttons@https://github.com/chrisbso/react-native-social-buttons.git":
+  version "1.1.7"
+  resolved "https://github.com/chrisbso/react-native-social-buttons.git#9f1fff4db52bf14460b8f8ae326eb86340f89bda"
 
 react-native-table-component@1.2.1:
   version "1.2.1"

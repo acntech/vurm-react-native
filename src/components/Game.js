@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Snake from "../classes/Snake";
-import { MIN_TICK_INTERVAL_MS, NUM_COLUMNS, NUM_ROWS } from "../constants";
+import { MIN_TICK_INTERVAL_MS } from "../constants";
 import { generateRandomCoord } from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";

@@ -1,4 +1,4 @@
-import { View, Text, Button, TouchableWithoutFeedback } from "react-native";
+import { View, Text, Button, Alert } from "react-native";
 import loginWithFacebook from "../auth/facebook";
 import { getAuth, signOut } from "firebase/auth";
 import { FacebookSocialButton } from "react-native-social-buttons";
@@ -16,14 +16,19 @@ export default LogInOutButton = () => {
       .then(() => {
         setUser(auth.currentUser);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        Alert.alert("Failed to sign out", [
+          {
+            text: "OK",
+          },
+        ]);
+      });
   };
 
   return (
     <View>
       {!user ? (
         <View>
-          <Text>{!loginButtonDisabled ? "enabled" : "disabled"}</Text>
           <FacebookSocialButton
             buttonViewStyle={{ alignSelf: "center" }}
             onPress={onPressLoginWithFacebook}

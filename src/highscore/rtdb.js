@@ -13,6 +13,7 @@ import {
   colors,
   animals,
 } from "unique-names-generator";
+import { orderByChild, query } from "firebase/database";
 
 const getReference = (path) => {
   try {
@@ -27,12 +28,12 @@ export const getUsersReference = () => {
   return getReference("users/");
 };
 
-const getUserReference = (user) => {
-  return getReference("users/" + user?.uid);
+export const getUserReference = (user) => {
+  return getReference("users/" + user.uid);
 };
 
-export const getUserData = async (user) => {
-  return await get(getUserReference(user));
+export const getUserData = (user) => {
+  return get(getUserReference(user));
 };
 
 export const deleteUserData = (user) => {
@@ -48,7 +49,7 @@ export const setUserData = async (user, data) => {
       dictionaries: [adjectives, colors, animals],
       style: "capital",
       separator: "",
-    }); // big_red_donkey
+    }); // BigRedDonkey
     const augmented_data = { name: randomName, ...data };
     await set(userReference, augmented_data, (error) => {
       if (error) {
@@ -56,6 +57,21 @@ export const setUserData = async (user, data) => {
       }
     });
   }
+};
+
+export const getUserRank = async (user, setCallback) => {
+  const ref = query(getUsersReference(), orderByChild("score"));
+  console.log(ref);
+  get(ref).then((snapshot) => {
+    let rank = Object.keys(snapshot.val()).length;
+    snapshot.forEach((child) => {
+      rank--;
+      if (child.key == user.uid) {
+        setCallback(rank);
+        return;
+      }
+    });
+  });
 };
 
 export const getUserProperty = async (
@@ -84,26 +100,9 @@ export const getUserProperty = async (
   return property;
 };
 
-export const processUsersSnapshot = (usersSnapshot) => {
-  processedData = [];
-  if (!usersSnapshot.hasChildren()) {
-    return processedData;
-  }
-  usersSnapshot.forEach((child) => {
-    const childValue = child.val();
-    processedData.push([
-      childValue?.name,
-      childValue?.score,
-      childValue?.difficulty,
-    ]);
-  });
-  return processedData;
-};
-
 function setupHighscoreListener(user) {
   if (user != null) {
-    const db = getDatabase();
-    const reference = ref(db, "users/" + user);
+    const reference = getUserReference(user);
     onValue(reference, (snapshot) => {
       const highscore = snapshot.val().highscore;
       console.log("New high score: " + highscore);

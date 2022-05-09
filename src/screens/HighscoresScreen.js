@@ -1,4 +1,4 @@
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 
 import HighscoreTable from "../components/HighscoreTable";
 import Social from "../components/Social";

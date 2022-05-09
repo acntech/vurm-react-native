@@ -1,14 +1,48 @@
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert, StyleSheet } from "react-native";
 import loginWithFacebook from "../auth/facebook";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { onValue, orderByChild, query } from "firebase/database";
+import { auth } from "../auth/firebase";
 import { FacebookSocialButton } from "react-native-social-buttons";
-import { useState } from "react";
-import { deleteUserData } from "../highscore/rtdb";
+import { useState, useEffect } from "react";
+import { deleteUserData, getUsersReference } from "../highscore/rtdb";
+import {
+  columnFlex,
+  extractHighscoreDataFromUsersSnapshot,
+} from "./HighscoreTable";
+import HorizontalSeparator from "./HorizontalSeparator";
+import { Row, Table } from "react-native-table-component";
 
 export default Social = () => {
-  const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
   const [loginButtonDisabled, setLoginButtonDisabled] = useState(false);
+  const [deleteMyDataButtonDisabled, setDeleteMyDataButtonDisabled] =
+    useState(true);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const usersReferenceOrderedByScore = query(
+      getUsersReference(),
+      orderByChild("score")
+    );
+    if (user) {
+      const unsubscribe = onValue(
+        usersReferenceOrderedByScore,
+        (usersSnapshot) => {
+          const highscoreData = extractHighscoreDataFromUsersSnapshot(
+            usersSnapshot,
+            user.uid
+          );
+          !highscoreData.length
+            ? setDeleteMyDataButtonDisabled(true)
+            : setDeleteMyDataButtonDisabled(false);
+          setData(...highscoreData);
+        }
+      );
+      return unsubscribe;
+    }
+  }, []);
+
   const onPressLoginWithFacebook = () => {
     loginWithFacebook(setUser, setLoginButtonDisabled);
   };
@@ -38,6 +72,7 @@ export default Social = () => {
           text: "Delete",
           onPress: () => {
             deleteUserData(auth.currentUser);
+            setDeleteMyDataButtonDisabled(true);
           },
           style: "destructive",
         },
@@ -57,9 +92,21 @@ export default Social = () => {
         </View>
       ) : (
         <View>
-          <Text style={{ alignSelf: "center" }}>
+          <HorizontalSeparator
+            text={` ${user.displayName}  `}
+          ></HorizontalSeparator>
+
+          {/* <Text style={{ alignSelf: "center" }}>
             Signed in as "{user?.displayName}"
-          </Text>
+          </Text> */}
+          <Table>
+            <Row
+              flexArr={columnFlex}
+              data={data}
+              textStyle={styles.text}
+              style={{ backgroundColor: "oldlace" }}
+            ></Row>
+          </Table>
           <Button
             style={{ alignSelf: "center" }}
             title={"Sign Out"}
@@ -69,6 +116,7 @@ export default Social = () => {
             style={{ alignSelf: "center" }}
             title={"Delete My Data"}
             color={"red"}
+            disabled={deleteMyDataButtonDisabled}
             onPress={onPressDeleteMyData}
           ></Button>
         </View>
@@ -76,3 +124,9 @@ export default Social = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  // head: { height: 40, backgroundColor: "coral" },
+  text: { margin: 6, color: "coral", textAlign: "center" },
+  wrapper: { flexDirection: "row" },
+});

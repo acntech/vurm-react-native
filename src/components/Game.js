@@ -7,7 +7,7 @@ import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
 import { constainsCoord } from "../utilities/comparison";
-import { getUserScore } from "../highscore/rtdb";
+import * as rtdb from "../highscore/rtdb";
 import { auth } from "../auth/firebase";
 
 export default class Game extends Component {
@@ -27,9 +27,7 @@ export default class Game extends Component {
   isGameOver() {
     const snake = this.state.snake;
     const nextHead = snake.getNextHead();
-
     const possibleInterceptions = snake.getCoords().slice(0, -1);
-
     const selfIntercepting = constainsCoord(possibleInterceptions, nextHead);
 
     if (selfIntercepting) {
@@ -39,7 +37,7 @@ export default class Game extends Component {
   }
 
   gameOverPrompt() {
-    Alert.alert("Game Over!", `Your score: ${this.state.numBerriesEaten}`, [
+    Alert.alert("Game Over!", `Your score: ${this.state.score}`, [
       {
         text: "Exit",
         onPress: () => this.props.navigation.goBack(),
@@ -56,19 +54,19 @@ export default class Game extends Component {
 
   difficultySelectionPrompt() {
     difficulties = [
-      { title: "Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 10 },
-      { title: "Senior Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 4 },
-      { title: "Associate", tickIntervalMs: MIN_TICK_INTERVAL_MS * 3 },
-      { title: "BAWS", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
+      { name: "Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 30 },
+      { name: "Senior Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 4 },
+      { name: "Associate", tickIntervalMs: MIN_TICK_INTERVAL_MS * 3 },
+      { name: "BAWS", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
     ];
     return new Promise((resolve) => {
       Alert.alert(
         "Choose difficulty",
         null,
         difficulties.map((difficulty) => ({
-          text: difficulty.title,
+          text: difficulty.name,
           onPress: () => {
-            this.setState({ tickIntervalMs: difficulty.tickIntervalMs });
+            this.setState({ difficulty: difficulty });
             resolve();
           },
         }))
@@ -76,14 +74,35 @@ export default class Game extends Component {
     });
   }
 
+  async start() {
+    this.pull();
+    await this.difficultySelectionPrompt();
+    this.boundBerryEaten = () => this.berryEaten();
+    this.boundSetDirection = this.state.snake.setDirection.bind(
+      this.state.snake
+    );
+    this._interval = setInterval(() => {
+      this.tick();
+    }, this.state.difficulty.tickIntervalMs);
+  }
+
+  reset() {
+    this.setState(getInitialGameState());
+  }
+
   tick() {
-    if (this.isGameOver() && !this.state.exiting) {
+    if (this.isGameOver()) {
       clearInterval(this._interval);
+      this.push();
       this.gameOverPrompt();
     } else {
+      const eatCallback = () => {
+        this.boundBerryEaten();
+        this.updateHighscore();
+      };
       this.ensureBerryExistence();
       this.state.snake.move();
-      this.state.snake.eat(this.state.berry, this.boundBerryEaten);
+      this.state.snake.eat(this.state.berry, eatCallback);
       this.setState({ ticks: this.state.ticks + 1 });
     }
   }
@@ -91,7 +110,7 @@ export default class Game extends Component {
   berryEaten() {
     this.setState({
       berry: null,
-      numBerriesEaten: this.state.numBerriesEaten + 1,
+      score: this.state.score + 1,
     });
   }
 
@@ -103,49 +122,92 @@ export default class Game extends Component {
     }
   }
 
-  reset() {
-    this.setState(getInitialGameState());
+  async push() {
+    user = this.state.user;
+    score = this.state.score;
+    difficulty = this.state.difficulty.name;
+
+    remoteHighscore = await rtdb.getUserProperty(user, "score", 0, () => {});
+    if (score > remoteHighscore) {
+      rtdb.setUserData(user, { score: score, difficulty: difficulty });
+    }
   }
 
-  async start() {
-    await this.difficultySelectionPrompt();
-    this.boundBerryEaten = () => this.berryEaten();
-    this.boundSetDirection = this.state.snake.setDirection.bind(
-      this.state.snake
+  async pull() {
+    await this._pullHighscore();
+    await this._pullHighscoreDifficultyName();
+    this.updateHighscore();
+  }
+
+  async _pullHighscore() {
+    setHighscoreCallback = this.setHighscore.bind(this);
+    await rtdb.getUserProperty(
+      this.state.user,
+      "score",
+      0,
+      setHighscoreCallback
     );
-    this._interval = setInterval(() => {
-      this.tick();
-    }, this.state.tickIntervalMs);
   }
 
-  createHighscoreText(user) {
-    highscore_text = "";
-    if (!user) {
-      highscore_text = "Log in to view highscore";
+  async _pullHighscoreDifficultyName() {
+    setHighscoreDifficultyNameCallback =
+      this.setHighscoreDifficultyName.bind(this);
+    await rtdb.getUserProperty(
+      this.state.user,
+      "difficulty",
+      "",
+      setHighscoreDifficultyNameCallback
+    );
+  }
+
+  setHighscore(score) {
+    this.setState({ highscore: score });
+  }
+
+  setHighscoreDifficultyName(highscoreDifficultyName) {
+    this.setState({ highscoreDifficultyName: highscoreDifficultyName });
+  }
+
+  updateHighscore() {
+    if (this.state.score > this.state.highscore) {
+      this.setHighscore(this.state.score);
+      this.setHighscoreDifficultyName(this.state.difficulty.name);
+    }
+    this._updateHighscoreText();
+  }
+
+  _updateHighscoreText() {
+    highscoreText = "";
+    if (!this.state.user) {
+      highscoreText = "Log in to track highscore";
     } else {
-      highscore = getUserScore(user);
-      if (!highscore) {
-        highscore_text = "Failed to retreive highscore";
+      if (this.state.highscore == -1) {
+        highscoreText = "Retrieving highscore...";
+      } else if (this.state.highscore == null) {
+        highscoreText = "Failed to retreive highscore";
       } else {
-        highscore_text = `Highscore: ${highscore}$`;
+        const difficulty = this.state.highscoreDifficultyName
+          ? `(${this.state.highscoreDifficultyName})`
+          : "";
+        highscoreText = `Highscore: ${this.state.highscore} ${difficulty}`;
       }
     }
-    return highscore_text;
+    this.setState({ highscoreText: highscoreText });
   }
+
   render() {
-    user = auth?.currentUser;
     return (
       <SafeAreaView style={styles.container} testID={"Game"}>
         <View style={{ flexDirection: "row" }}>
           <Text style={[styles.score, { flex: 1 }]}>
-            Score: {this.state.numBerriesEaten}
+            Score: {`${this.state.score} \n`}
           </Text>
           <Text style={[styles.score, { flex: 1 }]}>
-            {this.createHighscoreText(user)}
+            {this.state.highscoreText}
           </Text>
-          {/* <Text style={[styles.score, { flex: 1 }]}>
-            Tick: {this.state.ticks}
-          </Text> */}
+          <Text style={[styles.score, { flex: 1 }]}>
+            Difficulty: {this.state.difficulty.name}
+          </Text>
         </View>
         <Grid
           snakeCoords={this.state.snake.getCoords()}
@@ -162,9 +224,13 @@ const getInitialGameState = () => {
   return {
     snake: snake,
     berry: generateRandomCoord(snake.getCoords()),
-    tickIntervalMs: 100,
+    difficulty: { name: "", tickIntervalMs: 1000 },
     ticks: 0,
-    numBerriesEaten: 0,
+    score: 0,
+    user: auth.currentUser,
+    highscore: -1,
+    highscoreText: "",
+    highscoreDifficultyName: "",
   };
 };
 

@@ -1,6 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { onValue } from "firebase/database";
+import { getUsersReference } from "../highscore/rtdb";
 import { Table, Row, Rows } from "react-native-table-component";
 import { processUsersSnapshot } from "../highscore/rtdb";
 // users: {
@@ -16,8 +17,7 @@ import { processUsersSnapshot } from "../highscore/rtdb";
 
 export default HighscoreTable = () => {
   const [data, setData] = useState();
-  const db = getDatabase();
-  const usersReference = ref(db, "users/");
+  const usersReference = getUsersReference();
   useEffect(() => {
     const unsubscribe = onValue(usersReference, (usersSnapshot) => {
       const usersSnapshotData = processUsersSnapshot(usersSnapshot);
@@ -25,7 +25,7 @@ export default HighscoreTable = () => {
     });
     return unsubscribe;
   }, []);
-  const head = ["Name", "Score"];
+  const head = ["Name", "Score", "Difficulty"];
   return (
     <View style={styles.container}>
       <Table borderStyle={{ borderWidth: 0, borderColor: "white" }}>

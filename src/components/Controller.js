@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-// import { TouchableOpacity } from "react-native-gesture-handler";
 import { unicodeArrowToButtonLabelDirection } from "../utilities/conversion";
 
 export default Controller = ({ setSnakeDirection }) => {
@@ -58,11 +57,7 @@ export default Controller = ({ setSnakeDirection }) => {
 
 const ControllerButton = ({ label, onPressIn, onPressOut }) => (
   <View onTouchStart={onPressIn} onTouchEnd={onPressOut}>
-    <TouchableOpacity
-      style={styles.button}
-      // onPressIn={() => onPressIn()}
-      // onPressOut={() => onPressOut()}
-    >
+    <TouchableOpacity style={styles.button}>
       <Text style={[styles.buttonLabel]}>{label}</Text>
     </TouchableOpacity>
   </View>

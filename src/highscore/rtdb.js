@@ -7,13 +7,6 @@ import {
   remove,
   child,
 } from "firebase/database";
-import {
-  uniqueNamesGenerator,
-  adjectives,
-  colors,
-  animals,
-} from "unique-names-generator";
-import { orderByChild, query } from "firebase/database";
 
 const getReference = (path) => {
   try {
@@ -45,33 +38,12 @@ export const deleteUserData = (user) => {
 export const setUserData = async (user, data) => {
   if (user != null) {
     const userReference = getUserReference(user);
-    const randomName = uniqueNamesGenerator({
-      dictionaries: [adjectives, colors, animals],
-      style: "capital",
-      separator: "",
-    }); // BigRedDonkey
-    const augmented_data = { name: randomName, ...data };
-    await set(userReference, augmented_data, (error) => {
+    await set(userReference, data, (error) => {
       if (error) {
         console.log(error);
       }
     });
   }
-};
-
-export const getUserRank = async (user, setCallback) => {
-  const ref = query(getUsersReference(), orderByChild("score"));
-  console.log(ref);
-  get(ref).then((snapshot) => {
-    let rank = Object.keys(snapshot.val()).length;
-    snapshot.forEach((child) => {
-      rank--;
-      if (child.key == user.uid) {
-        setCallback(rank);
-        return;
-      }
-    });
-  });
 };
 
 export const getUserProperty = async (

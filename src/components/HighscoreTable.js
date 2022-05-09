@@ -20,7 +20,7 @@ export default HighscoreTable = () => {
   const usersReferenceOrderedByScore = query(
     getUsersReference(),
     orderByChild("score"),
-    limitToLast(10)
+    limitToLast(15)
   );
 
   useEffect(() => {

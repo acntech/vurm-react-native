@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Snake from "../classes/Snake";
 import { MIN_TICK_INTERVAL_MS } from "../constants";
-import { generateRandomCoord } from "../utilities/generators";
+import {
+  generateRandomCoord,
+  generateRandomName,
+} from "../utilities/generators";
 import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
@@ -21,6 +24,7 @@ export default class Game extends Component {
   }
 
   componentWillUnmount() {
+    this.push();
     clearInterval(this._interval);
   }
 
@@ -128,8 +132,16 @@ export default class Game extends Component {
     difficulty = this.state.difficulty.name;
 
     remoteHighscore = await rtdb.getUserProperty(user, "score", 0, () => {});
+
     if (score > remoteHighscore) {
-      rtdb.setUserData(user, { score: score, difficulty: difficulty });
+      remoteNickname = await rtdb.getUserProperty(user, "name", null, () => {});
+      const name =
+        remoteNickname == null ? generateRandomName() : remoteNickname;
+      rtdb.setUserData(user, {
+        name: name,
+        score: score,
+        difficulty: difficulty,
+      });
     }
   }
 
@@ -152,7 +164,7 @@ export default class Game extends Component {
   async _pullHighscoreDifficultyName() {
     setHighscoreDifficultyNameCallback =
       this.setHighscoreDifficultyName.bind(this);
-    await rtdb.getUserProperty(
+    rtdb.getUserProperty(
       this.state.user,
       "difficulty",
       "",
@@ -162,10 +174,12 @@ export default class Game extends Component {
 
   setHighscore(score) {
     this.setState({ highscore: score });
+    this._updateHighscoreText();
   }
 
   setHighscoreDifficultyName(highscoreDifficultyName) {
     this.setState({ highscoreDifficultyName: highscoreDifficultyName });
+    this._updateHighscoreText();
   }
 
   updateHighscore() {
@@ -189,7 +203,7 @@ export default class Game extends Component {
         const difficulty = this.state.highscoreDifficultyName
           ? `(${this.state.highscoreDifficultyName})`
           : "";
-        highscoreText = `Highscore: ${this.state.highscore} ${difficulty}`;
+        highscoreText = `Highscore\n${this.state.highscore} ${difficulty}`;
       }
     }
     this.setState({ highscoreText: highscoreText });
@@ -200,13 +214,13 @@ export default class Game extends Component {
       <SafeAreaView style={styles.container} testID={"Game"}>
         <View style={{ flexDirection: "row" }}>
           <Text style={[styles.score, { flex: 1 }]}>
-            Score: {`${this.state.score} \n`}
+            Score {`\n${this.state.score}`}
           </Text>
           <Text style={[styles.score, { flex: 1 }]}>
             {this.state.highscoreText}
           </Text>
           <Text style={[styles.score, { flex: 1 }]}>
-            Difficulty: {this.state.difficulty.name}
+            Difficulty {`\n${this.state.difficulty.name}`}
           </Text>
         </View>
         <Grid
@@ -226,7 +240,7 @@ const getInitialGameState = () => {
     berry: generateRandomCoord(snake.getCoords()),
     difficulty: { name: "", tickIntervalMs: 1000 },
     ticks: 0,
-    score: 3,
+    score: 0,
     user: auth.currentUser,
     highscore: -1,
     highscoreText: "",

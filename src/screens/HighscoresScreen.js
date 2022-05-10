@@ -5,7 +5,7 @@ import Social from "../components/Social";
 const HighscoresScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HighscoreTable></HighscoreTable>
+      <HighscoreTable scrollEnabled={true}></HighscoreTable>
       <Social></Social>
     </SafeAreaView>
   );

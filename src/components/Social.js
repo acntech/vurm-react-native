@@ -6,12 +6,9 @@ import { auth } from "../auth/firebase";
 import { FacebookSocialButton } from "react-native-social-buttons";
 import { useState, useEffect } from "react";
 import { deleteUserData, getUsersReference } from "../highscore/rtdb";
-import {
-  columnFlex,
-  extractHighscoreDataFromUsersSnapshot,
-} from "./HighscoreTable";
+import { extractHighscoreDataFromUsersSnapshot } from "./HighscoreTable";
 import HorizontalSeparator from "./HorizontalSeparator";
-import { Row, Table } from "react-native-table-component";
+import ScoreTable from "./ScoreTable";
 
 export default Social = () => {
   const [user, setUser] = useState(auth.currentUser);
@@ -25,6 +22,7 @@ export default Social = () => {
       getUsersReference(),
       orderByChild("score")
     );
+
     if (user) {
       const unsubscribe = onValue(
         usersReferenceOrderedByScore,
@@ -36,7 +34,8 @@ export default Social = () => {
           !highscoreData.length
             ? setDeleteMyDataButtonDisabled(true)
             : setDeleteMyDataButtonDisabled(false);
-          setData(...highscoreData);
+          setData(highscoreData);
+          // console.log(highscoreData);
         }
       );
       return unsubscribe;
@@ -92,21 +91,14 @@ export default Social = () => {
         </View>
       ) : (
         <View>
-          <HorizontalSeparator
+          {/* <HorizontalSeparator
             text={` ${user.displayName}  `}
-          ></HorizontalSeparator>
+          ></HorizontalSeparator> */}
 
           {/* <Text style={{ alignSelf: "center" }}>
             Signed in as "{user?.displayName}"
           </Text> */}
-          <Table>
-            <Row
-              flexArr={columnFlex}
-              data={data}
-              textStyle={styles.text}
-              style={{ backgroundColor: "oldlace" }}
-            ></Row>
-          </Table>
+
           <Button
             style={{ alignSelf: "center" }}
             title={"Sign Out"}
@@ -119,6 +111,11 @@ export default Social = () => {
             disabled={deleteMyDataButtonDisabled}
             onPress={onPressDeleteMyData}
           ></Button>
+          {/* <ScoreTable
+            data={data}
+            scrollEnabled={true}
+            flexGrow={false}
+          ></ScoreTable> */}
         </View>
       )}
     </View>

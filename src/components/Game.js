@@ -182,7 +182,7 @@ export default class Game extends Component {
     this._updateHighscoreText();
   }
 
-  updateHighscore() {
+  async updateHighscore() {
     if (this.state.score > this.state.highscore) {
       this.setHighscore(this.state.score);
       this.setHighscoreDifficultyName(this.state.difficulty.name);

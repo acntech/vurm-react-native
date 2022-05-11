@@ -79,12 +79,12 @@ export default class Game extends Component {
   }
 
   start() {
-    this.pull();
-    // await this.difficultySelectionPrompt();
-    this.boundBerryEaten = () => this.berryEaten();
-    this.boundSetDirection = this.state.snake.setDirection.bind(
+    this.state.boundBerryEaten = async () => this.berryEaten();
+    this.state.boundSetDirection = this.state.snake.setDirection.bind(
       this.state.snake
     );
+    this.pull();
+    // await this.difficultySelectionPrompt();;
     this._interval = setInterval(() => {
       this.tick();
     }, this.state.difficulty.tickIntervalMs);
@@ -101,7 +101,7 @@ export default class Game extends Component {
       this.gameOverPrompt();
     } else {
       const eatCallback = async () => {
-        this.boundBerryEaten();
+        this.state.boundBerryEaten();
         this.updateHighscore();
       };
       this.ensureBerryExistence();
@@ -111,14 +111,14 @@ export default class Game extends Component {
     }
   }
 
-  async berryEaten() {
+  berryEaten() {
     this.setState({
       berry: null,
       score: this.state.score + 1,
     });
   }
 
-  ensureBerryExistence() {
+  async ensureBerryExistence() {
     if (this.state.berry == null) {
       this.setState({
         berry: generateRandomCoord(this.state.snake.getCoords()),
@@ -128,18 +128,18 @@ export default class Game extends Component {
 
   async push() {
     user = this.state.user;
-    score = this.state.score;
+    highscore = this.state.highscore;
     difficulty = this.state.difficulty.name;
 
     remoteHighscore = await rtdb.getUserProperty(user, "score", 0, () => {});
 
-    if (score > remoteHighscore) {
+    if (highscore > remoteHighscore) {
       remoteNickname = await rtdb.getUserProperty(user, "name", null, () => {});
       const name =
         remoteNickname == null ? generateRandomName() : remoteNickname;
       rtdb.setUserData(user, {
         name: name,
-        score: score,
+        score: highscore,
         difficulty: difficulty,
       });
     }
@@ -172,12 +172,12 @@ export default class Game extends Component {
     );
   }
 
-  setHighscore(score) {
+  async setHighscore(score) {
     this.setState({ highscore: score });
     this._updateHighscoreText();
   }
 
-  setHighscoreDifficultyName(highscoreDifficultyName) {
+  async setHighscoreDifficultyName(highscoreDifficultyName) {
     this.setState({ highscoreDifficultyName: highscoreDifficultyName });
     this._updateHighscoreText();
   }
@@ -186,11 +186,11 @@ export default class Game extends Component {
     if (this.state.score > this.state.highscore) {
       this.setHighscore(this.state.score);
       this.setHighscoreDifficultyName(this.state.difficulty.name);
+      this._updateHighscoreText();
     }
-    this._updateHighscoreText();
   }
 
-  _updateHighscoreText() {
+  async _updateHighscoreText() {
     highscoreText = "";
     if (!this.state.user) {
       highscoreText = "Log in to track highscore";
@@ -227,7 +227,9 @@ export default class Game extends Component {
           snakeCoords={this.state.snake.getCoords()}
           berryCoord={this.state.berry}
         ></Grid>
-        <Controller setSnakeDirection={this.boundSetDirection}></Controller>
+        <Controller
+          setSnakeDirection={this.state.boundSetDirection}
+        ></Controller>
       </SafeAreaView>
     );
   }

@@ -1,49 +1,51 @@
 import { useState, useEffect } from "react";
 import { limitToLast, onValue, orderByChild, query } from "firebase/database";
-import { getUsersReference } from "../highscore/rtdb";
+import { getUsersReference } from "../leaderboard/rtdb";
 import ScoreTable from "./ScoreTable";
+import { auth } from "../auth/firebase";
 
-export default HighscoreTable = () => {
+export default Leaderboard = () => {
   const [data, setData] = useState();
   const usersReferenceOrderedByScore = query(
     getUsersReference(),
     orderByChild("score"),
-    limitToLast(30)
+    limitToLast(50)
   );
 
   useEffect(() => {
     const unsubscribe = onValue(
       usersReferenceOrderedByScore,
       (usersSnapshot) => {
-        const highscoreData = extractHighscoreDataFromUsersSnapshot(
+        const leaderboardData = extractLeaderboardDataFromUsersSnapshot(
           usersSnapshot,
           null
         );
-        setData(highscoreData.reverse());
+        setData(leaderboardData.reverse());
       }
     );
     return unsubscribe;
   }, []);
-  return <ScoreTable data={data} scrollEnabled={true}></ScoreTable>;
+  return (
+    <ScoreTable
+      scoreData={data}
+      scrollEnabled={true}
+      highlightUid={auth?.currentUser.uid}
+    ></ScoreTable>
+  );
 };
 
-export const extractHighscoreDataFromUsersSnapshot = (
+export const extractLeaderboardDataFromUsersSnapshot = (
   usersSnapshot,
   uidFilter
 ) => {
-  processedData = [];
+  let processedData = [];
   if (!usersSnapshot.hasChildren()) {
     return processedData;
   }
   let rank = Object.keys(usersSnapshot.val()).length;
   usersSnapshot.forEach((child) => {
     const childValue = child.val();
-    childData = [
-      rank--,
-      childValue?.score,
-      childValue?.name,
-      childValue?.difficulty,
-    ];
+    childData = [rank--, childValue?.name, childValue?.score, child.key];
     if (!uidFilter || uidFilter === child.key) {
       processedData.push(childData);
     }

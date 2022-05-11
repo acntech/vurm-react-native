@@ -22,6 +22,7 @@ const createGridData = (snakeCoords, berryCoord) => {
   for (let i = 0; i < gridData.length; i++) {
     gridData[i] = {
       hasSnake: false,
+      hasSnakeHead: false,
       hasBerry: false,
       id: i,
     };
@@ -34,7 +35,7 @@ const createGridData = (snakeCoords, berryCoord) => {
   if (berryCoord != null) {
     gridData[coordToIdx(berryCoord)].hasBerry = true;
   }
-
+  gridData[coordToIdx(snakeCoords[0])].hasSnakeHead = true;
   return gridData;
 };
 
@@ -48,6 +49,7 @@ const renderBox = ({ item }) => {
         { paddingVertical: height / (4.6 * NUM_ROWS) },
         item.hasSnake && styles.snakeBody,
         item.hasBerry && styles.berry,
+        item.hasSnakeHead && styles.snakeHead,
       ]}
     ></Box>
   );
@@ -57,7 +59,8 @@ class Box extends Component {
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.item.hasSnake != this.props.item.hasSnake ||
-      nextProps.item.hasBerry != this.props.item.hasBerry
+      nextProps.item.hasBerry != this.props.item.hasBerry ||
+      nextProps.item.hasSnakeHead != this.props.item.hasSnakeHead
     );
   }
 
@@ -69,7 +72,6 @@ class Box extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "coral",
-    // maxHeight: "30%",
   },
 
   item: {
@@ -80,5 +82,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 0.5,
   },
   snakeBody: { backgroundColor: "white" },
+  snakeHead: { backgroundColor: "silver" },
   berry: { backgroundColor: "purple" },
 });

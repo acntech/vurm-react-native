@@ -10,7 +10,7 @@ import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
 import { constainsCoord } from "../utilities/comparison";
-import * as rtdb from "../highscore/rtdb";
+import * as rtdb from "../leaderboard/rtdb";
 import { auth } from "../auth/firebase";
 
 export default class Game extends Component {
@@ -78,9 +78,9 @@ export default class Game extends Component {
     });
   }
 
-  async start() {
+  start() {
     this.pull();
-    await this.difficultySelectionPrompt();
+    // await this.difficultySelectionPrompt();
     this.boundBerryEaten = () => this.berryEaten();
     this.boundSetDirection = this.state.snake.setDirection.bind(
       this.state.snake
@@ -100,7 +100,7 @@ export default class Game extends Component {
       this.push();
       this.gameOverPrompt();
     } else {
-      const eatCallback = () => {
+      const eatCallback = async () => {
         this.boundBerryEaten();
         this.updateHighscore();
       };
@@ -111,7 +111,7 @@ export default class Game extends Component {
     }
   }
 
-  berryEaten() {
+  async berryEaten() {
     this.setState({
       berry: null,
       score: this.state.score + 1,
@@ -200,10 +200,10 @@ export default class Game extends Component {
       } else if (this.state.highscore == null) {
         highscoreText = "Failed to retreive highscore";
       } else {
-        const difficulty = this.state.highscoreDifficultyName
-          ? `(${this.state.highscoreDifficultyName})`
-          : "";
-        highscoreText = `Highscore\n${this.state.highscore} ${difficulty}`;
+        // const difficulty = this.state.highscoreDifficultyName
+        //   ? `(${this.state.highscoreDifficultyName})`
+        //   : "";
+        highscoreText = `Highscore\n${this.state.highscore}`;
       }
     }
     this.setState({ highscoreText: highscoreText });
@@ -219,9 +219,9 @@ export default class Game extends Component {
           <Text style={[styles.score, { flex: 1 }]}>
             {this.state.highscoreText}
           </Text>
-          <Text style={[styles.score, { flex: 1 }]}>
+          {/* <Text style={[styles.score, { flex: 1 }]}>
             Difficulty {`\n${this.state.difficulty.name}`}
-          </Text>
+          </Text> */}
         </View>
         <Grid
           snakeCoords={this.state.snake.getCoords()}
@@ -238,7 +238,7 @@ const getInitialGameState = () => {
   return {
     snake: snake,
     berry: generateRandomCoord(snake.getCoords()),
-    difficulty: { name: "", tickIntervalMs: 1000 },
+    difficulty: { name: "default", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
     ticks: 0,
     score: 0,
     user: auth.currentUser,

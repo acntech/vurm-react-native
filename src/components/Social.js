@@ -5,8 +5,8 @@ import { onValue, orderByChild, query } from "firebase/database";
 import { auth } from "../auth/firebase";
 import { FacebookSocialButton } from "react-native-social-buttons";
 import { useState, useEffect } from "react";
-import { deleteUserData, getUsersReference } from "../highscore/rtdb";
-import { extractHighscoreDataFromUsersSnapshot } from "./HighscoreTable";
+import { deleteUserData, getUsersReference } from "../leaderboard/rtdb";
+import { extractLeaderboardDataFromUsersSnapshot } from "./Leaderboard";
 import HorizontalSeparator from "./HorizontalSeparator";
 import ScoreTable from "./ScoreTable";
 
@@ -27,7 +27,7 @@ export default Social = () => {
       const unsubscribe = onValue(
         usersReferenceOrderedByScore,
         (usersSnapshot) => {
-          const highscoreData = extractHighscoreDataFromUsersSnapshot(
+          const highscoreData = extractLeaderboardDataFromUsersSnapshot(
             usersSnapshot,
             user.uid
           );

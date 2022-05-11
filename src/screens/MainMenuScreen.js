@@ -9,12 +9,12 @@ import { GAME_TITLE } from "../constants";
 
 export const startGameLabel = "Start Game";
 export const instructionsLabel = "Instructions";
-export const highscoresLabel = "Highscores";
+export const leaderboardLabel = "Leaderboard";
 
 const MainMenuScreen = ({ navigation }) => {
   const navigateToGame = () => navigation.navigate(startGameLabel);
   const navigateToInstructions = () => navigation.navigate(instructionsLabel);
-  const navigateToHighscores = () => navigation.navigate(highscoresLabel);
+  const navigateToLeaderboard = () => navigation.navigate(leaderboardLabel);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,20 +23,20 @@ const MainMenuScreen = ({ navigation }) => {
         <MainMenuButton
           onPress={navigateToGame}
           label={startGameLabel}
-          buttonStyle={styles.startGameButton}
-          labelStyle={styles.startGameButtonLabel}
+          buttonStyle={styles.primaryButton}
+          labelStyle={styles.primaryButtonLabel}
         />
         <MainMenuButton
           onPress={navigateToInstructions}
           label={instructionsLabel}
-          buttonStyle={styles.instructionsButton}
-          labelStyle={styles.instructionsButtonLabel}
+          buttonStyle={styles.secondaryButton}
+          labelStyle={styles.secondaryButtonLabel}
         />
         <MainMenuButton
-          onPress={navigateToHighscores}
-          label={highscoresLabel}
-          buttonStyle={styles.instructionsButton}
-          labelStyle={styles.instructionsButtonLabel}
+          onPress={navigateToLeaderboard}
+          label={leaderboardLabel}
+          buttonStyle={styles.secondaryButton}
+          labelStyle={styles.secondaryButtonLabel}
         ></MainMenuButton>
       </View>
     </SafeAreaView>
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: "oldlace",
   },
-  startGameButton: {
+  primaryButton: {
     backgroundColor: "coral",
   },
-  instructionsButton: {
+  secondaryButton: {
     backgroundColor: "oldlace",
   },
   buttonLabel: {
@@ -79,10 +79,10 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     textAlign: "center",
   },
-  startGameButtonLabel: {
+  primaryButtonLabel: {
     color: "white",
   },
-  instructionsButtonLabel: {
+  secondaryButtonLabel: {
     color: "coral",
   },
   gameTitle: {

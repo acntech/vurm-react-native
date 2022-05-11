@@ -1,11 +1,11 @@
-import { SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 
-import HighscoreTable from "../components/HighscoreTable";
+import Leaderboard from "../components/Leaderboard";
 import Social from "../components/Social";
 const HighscoresScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HighscoreTable scrollEnabled={true}></HighscoreTable>
+      <Leaderboard scrollEnabled={true}></Leaderboard>
       <Social></Social>
     </SafeAreaView>
   );

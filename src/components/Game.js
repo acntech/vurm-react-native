@@ -84,6 +84,7 @@ export default class Game extends Component {
       this.state.snake
     );
     this.pull();
+    this.placeBerry();
     // await this.difficultySelectionPrompt();;
     this._interval = setInterval(() => {
       this.tick();
@@ -94,7 +95,7 @@ export default class Game extends Component {
     this.setState(getInitialGameState());
   }
 
-  tick() {
+  async tick() {
     if (this.isGameOver()) {
       clearInterval(this._interval);
       this.push();
@@ -104,26 +105,23 @@ export default class Game extends Component {
         this.state.boundBerryEaten();
         this.updateHighscore();
       };
-      this.ensureBerryExistence();
       this.state.snake.move();
       this.state.snake.eat(this.state.berry, eatCallback);
       this.setState({ ticks: this.state.ticks + 1 });
     }
   }
 
-  berryEaten() {
+  async berryEaten() {
     this.setState({
-      berry: null,
+      berry: generateRandomCoord(this.state.snake.getCoords()),
       score: this.state.score + 1,
     });
   }
 
-  async ensureBerryExistence() {
-    if (this.state.berry == null) {
-      this.setState({
-        berry: generateRandomCoord(this.state.snake.getCoords()),
-      });
-    }
+  async placeBerry() {
+    this.setState({
+      berry: generateRandomCoord(this.state.snake.getCoords()),
+    });
   }
 
   async push() {
@@ -152,7 +150,7 @@ export default class Game extends Component {
   }
 
   async _pullHighscore() {
-    setHighscoreCallback = this.setHighscore.bind(this);
+    setHighscoreCallback = this._setHighscore.bind(this);
     await rtdb.getUserProperty(
       this.state.user,
       "score",
@@ -163,7 +161,7 @@ export default class Game extends Component {
 
   async _pullHighscoreDifficultyName() {
     setHighscoreDifficultyNameCallback =
-      this.setHighscoreDifficultyName.bind(this);
+      this._setHighscoreDifficultyName.bind(this);
     rtdb.getUserProperty(
       this.state.user,
       "difficulty",
@@ -172,20 +170,22 @@ export default class Game extends Component {
     );
   }
 
-  async setHighscore(score) {
+  async _setHighscore(score) {
     this.setState({ highscore: score });
     this._updateHighscoreText();
   }
 
-  async setHighscoreDifficultyName(highscoreDifficultyName) {
+  async _setHighscoreDifficultyName(highscoreDifficultyName) {
     this.setState({ highscoreDifficultyName: highscoreDifficultyName });
     this._updateHighscoreText();
   }
 
   async updateHighscore() {
     if (this.state.score > this.state.highscore) {
-      this.setHighscore(this.state.score);
-      this.setHighscoreDifficultyName(this.state.difficulty.name);
+      this.setState({
+        highscore: this.state.score,
+        highscoreDifficultyName: this.state.difficulty.name,
+      });
       this._updateHighscoreText();
     }
   }

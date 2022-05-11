@@ -27,15 +27,14 @@ export default Social = () => {
       const unsubscribe = onValue(
         usersReferenceOrderedByScore,
         (usersSnapshot) => {
-          const highscoreData = extractLeaderboardDataFromUsersSnapshot(
+          const userLeaderboardData = extractLeaderboardDataFromUsersSnapshot(
             usersSnapshot,
             user.uid
           );
-          !highscoreData.length
+          !userLeaderboardData.length
             ? setDeleteMyDataButtonDisabled(true)
             : setDeleteMyDataButtonDisabled(false);
-          setData(highscoreData);
-          // console.log(highscoreData);
+          setData(userLeaderboardData);
         }
       );
       return unsubscribe;

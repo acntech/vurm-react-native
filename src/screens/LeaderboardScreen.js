@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native";
 
 import Leaderboard from "../components/Leaderboard";
 import Social from "../components/Social";
-const HighscoresScreen = () => {
+const LeaderboardScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Leaderboard scrollEnabled={true}></Leaderboard>
@@ -11,4 +11,4 @@ const HighscoresScreen = () => {
   );
 };
 
-export default HighscoresScreen;
+export default LeaderboardScreen;

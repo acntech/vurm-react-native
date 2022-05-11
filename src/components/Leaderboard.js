@@ -29,7 +29,7 @@ export default Leaderboard = () => {
     <ScoreTable
       scoreData={data}
       scrollEnabled={true}
-      highlightUid={auth?.currentUser.uid}
+      highlightUid={auth?.currentUser?.uid}
     ></ScoreTable>
   );
 };

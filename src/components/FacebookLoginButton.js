@@ -6,26 +6,23 @@ import * as Facebook from "expo-facebook";
 const FacebookLoginButton = ({
   buttonViewStyle,
   setUser,
-  setLoginButtonDisabled,
+  setDisabled,
   disabled,
 }) => (
   <FacebookSocialButton
     buttonViewStyle={buttonViewStyle}
     onPress={() => {
-      setLoginButtonDisabled(true);
-      loginWithFacebook(setUser, setLoginButtonDisabled).then(
-        setLoginButtonDisabled(false)
-      );
+      setDisabled(true);
+      loginWithFacebook(setUser).finally(() => setDisabled(false));
     }}
     disabled={disabled}
   />
 );
 
-async function loginWithFacebook(setUser, setLoginButtonDisabled) {
+async function loginWithFacebook(setUser) {
   const appId = "498173242097723";
   await Facebook.initializeAsync({ appId });
 
-  await setLoginButtonDisabled(true);
   const { type, token } = await Facebook.logInWithReadPermissionsAsync({
     permissions: ["public_profile"],
   });
@@ -38,13 +35,10 @@ async function loginWithFacebook(setUser, setLoginButtonDisabled) {
     signInWithCredential(auth, credential)
       .then(() => {
         setUser(auth.currentUser);
-        setLoginButtonDisabled(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  } else {
-    setLoginButtonDisabled(false);
   }
 
   // return auth;

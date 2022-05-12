@@ -2,21 +2,18 @@ import { View, Text, Button, Alert, StyleSheet } from "react-native";
 import { signOut } from "firebase/auth";
 import { onValue, orderByChild, query } from "firebase/database";
 import { auth } from "../firebase/auth";
-import { FacebookSocialButton } from "react-native-social-buttons";
 import { useState, useEffect } from "react";
 import { deleteUserData, getUsersReference } from "../firebase/rtdb";
 import { extractLeaderboardDataFromUsersSnapshot } from "./Leaderboard";
 import HorizontalSeparator from "./HorizontalSeparator";
-import ScoreTable from "./ScoreTable";
 import FacebookLoginButton from "./FacebookLoginButton";
 import GoogleLoginButton from "./GoogleLoginButton";
 
-export default Social = () => {
+export default SocialLogin = () => {
   const [user, setUser] = useState(auth.currentUser);
-  const [loginButtonDisabled, setLoginButtonDisabled] = useState(false);
+  const [loginInProgress, setLoginInProgress] = useState(false);
   const [deleteMyDataButtonDisabled, setDeleteMyDataButtonDisabled] =
     useState(true);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     const usersReferenceOrderedByScore = query(
@@ -35,16 +32,12 @@ export default Social = () => {
           !userLeaderboardData.length
             ? setDeleteMyDataButtonDisabled(true)
             : setDeleteMyDataButtonDisabled(false);
-          setData(userLeaderboardData);
         }
       );
       return unsubscribe;
     }
   }, []);
 
-  const onPressLoginWithFacebook = () => {
-    loginWithFacebook(setUser, setLoginButtonDisabled);
-  };
   const onPressSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -85,15 +78,15 @@ export default Social = () => {
         <View>
           <FacebookLoginButton
             setUser={setUser}
-            setLoginButtonDisabled={setLoginButtonDisabled}
+            setDisabled={setLoginInProgress}
             buttonViewStyle={{ alignSelf: "center" }}
-            disabled={loginButtonDisabled}
+            disabled={loginInProgress}
           />
           <GoogleLoginButton
             setUser={setUser}
-            setLoginButtonDisabled={setLoginButtonDisabled}
+            setDisabled={setLoginInProgress}
             buttonViewStyle={{ alignSelf: "center" }}
-            disabled={loginButtonDisabled}
+            disabled={loginInProgress}
           ></GoogleLoginButton>
         </View>
       ) : (
@@ -118,11 +111,6 @@ export default Social = () => {
             disabled={deleteMyDataButtonDisabled}
             onPress={onPressDeleteMyData}
           ></Button>
-          {/* <ScoreTable
-            data={data}
-            scrollEnabled={true}
-            flexGrow={false}
-          ></ScoreTable> */}
         </View>
       )}
     </View>

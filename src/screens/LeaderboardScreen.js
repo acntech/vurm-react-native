@@ -1,12 +1,13 @@
 import { SafeAreaView } from "react-native";
 
 import Leaderboard from "../components/Leaderboard";
-import Social from "../components/Social";
+import SocialLogin from "../components/SocialLogin";
+
 const LeaderboardScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Leaderboard scrollEnabled={true}></Leaderboard>
-      <Social></Social>
+      <SocialLogin></SocialLogin>
     </SafeAreaView>
   );
 };

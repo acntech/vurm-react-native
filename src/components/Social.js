@@ -1,14 +1,15 @@
 import { View, Text, Button, Alert, StyleSheet } from "react-native";
-import loginWithFacebook from "../auth/facebook";
 import { signOut } from "firebase/auth";
 import { onValue, orderByChild, query } from "firebase/database";
-import { auth } from "../auth/firebase";
+import { auth } from "../firebase/auth";
 import { FacebookSocialButton } from "react-native-social-buttons";
 import { useState, useEffect } from "react";
-import { deleteUserData, getUsersReference } from "../leaderboard/rtdb";
+import { deleteUserData, getUsersReference } from "../firebase/rtdb";
 import { extractLeaderboardDataFromUsersSnapshot } from "./Leaderboard";
 import HorizontalSeparator from "./HorizontalSeparator";
 import ScoreTable from "./ScoreTable";
+import FacebookLoginButton from "./FacebookLoginButton";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 export default Social = () => {
   const [user, setUser] = useState(auth.currentUser);
@@ -82,11 +83,18 @@ export default Social = () => {
     <View>
       {!user ? (
         <View>
-          <FacebookSocialButton
+          <FacebookLoginButton
+            setUser={setUser}
+            setLoginButtonDisabled={setLoginButtonDisabled}
             buttonViewStyle={{ alignSelf: "center" }}
-            onPress={onPressLoginWithFacebook}
             disabled={loginButtonDisabled}
-          ></FacebookSocialButton>
+          />
+          <GoogleLoginButton
+            setUser={setUser}
+            setLoginButtonDisabled={setLoginButtonDisabled}
+            buttonViewStyle={{ alignSelf: "center" }}
+            disabled={loginButtonDisabled}
+          ></GoogleLoginButton>
         </View>
       ) : (
         <View>

@@ -5,6 +5,8 @@ PODS:
     - ExpoModulesCore
   - EXConstants (13.0.2):
     - ExpoModulesCore
+  - EXCrypto (10.1.2):
+    - ExpoModulesCore
   - EXFacebook (12.1.1):
     - ExpoModulesCore
     - FacebookSDK/CoreKit (= 9.2.0)
@@ -23,6 +25,8 @@ PODS:
   - ExpoModulesCore (0.6.5):
     - React-Core
     - ReactCommon/turbomodule/core
+  - EXRandom (12.1.2):
+    - React-Core
   - EXSplashScreen (0.14.2):
     - ExpoModulesCore
     - React-Core
@@ -34,6 +38,8 @@ PODS:
     - EXUpdatesInterface
     - React-Core
   - EXUpdatesInterface (0.5.1)
+  - EXWebBrowser (10.1.1):
+    - ExpoModulesCore
   - FacebookSDK/CoreKit (9.2.0):
     - FBSDKCoreKit (~> 9.2.0)
   - FacebookSDK/LoginKit (9.2.0):
@@ -350,6 +356,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXCrypto (from `../node_modules/expo-crypto/ios`)
   - EXFacebook (from `../node_modules/expo-facebook/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
@@ -358,10 +365,12 @@ DEPENDENCIES:
   - EXManifests (from `../node_modules/expo-manifests/ios`)
   - Expo (from `../node_modules/expo/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
+  - EXRandom (from `../node_modules/expo-random/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
   - EXUpdates (from `../node_modules/expo-updates/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
+  - EXWebBrowser (from `../node_modules/expo-web-browser/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -409,6 +418,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXCrypto:
+    :path: "../node_modules/expo-crypto/ios"
   EXFacebook:
     :path: "../node_modules/expo-facebook/ios"
   EXFileSystem:
@@ -425,6 +436,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
+  EXRandom:
+    :path: "../node_modules/expo-random/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
   EXStructuredHeaders:
@@ -433,6 +446,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-updates/ios"
   EXUpdatesInterface:
     :path: "../node_modules/expo-updates-interface/ios"
+  EXWebBrowser:
+    :path: "../node_modules/expo-web-browser/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -501,6 +516,7 @@ SPEC CHECKSUMS:
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXConstants: 88bf79622fbd9b476c96d8ec57fe97ca44fe8e3c
+  EXCrypto: ab2ba0df3136a5f2407b8c7e70eb498ac20d704f
   EXFacebook: f145a9d0a61d9f0ba88e221e2f69cf06f39a2265
   EXFileSystem: 08a3033ac372b6346becf07839e1ccef26fb1058
   EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
@@ -509,10 +525,12 @@ SPEC CHECKSUMS:
   EXManifests: d3464cd2278f4a19cd80c1aa673231570b534c11
   Expo: 534e51e607aba8229293297da5585f4b26f50fa1
   ExpoModulesCore: 32c0ccb47f477d330ee93db72505380adf0de09a
+  EXRandom: 1d00fd04d7d874c0c9d1ff87cee59ffe0b638a3d
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXStructuredHeaders: 4993087b2010dbcc510f5d92555b36f523425e8d
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
+  EXWebBrowser: f1573262c5de753987ed526c630076eda130804d
   FacebookSDK: 4b9bb8e2824898b47f18c666dc145c09b40609e6
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: afc5628676738836fc0170f13b8f608d06b3e439

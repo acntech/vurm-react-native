@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { limitToLast, onValue, orderByChild, query } from "firebase/database";
-import { getUsersReference } from "../leaderboard/rtdb";
+import { getUsersReference } from "../firebase/rtdb";
 import ScoreTable from "./ScoreTable";
-import { auth } from "../auth/firebase";
+import { auth } from "../firebase/auth";
 
 export default Leaderboard = () => {
   const [data, setData] = useState();

@@ -6704,7 +6704,7 @@ react-native-screens@~3.10.1:
 
 "react-native-social-buttons@https://github.com/chrisbso/react-native-social-buttons.git":
   version "1.1.7"
-  resolved "https://github.com/chrisbso/react-native-social-buttons.git#9f1fff4db52bf14460b8f8ae326eb86340f89bda"
+  resolved "https://github.com/chrisbso/react-native-social-buttons.git#d49bcee90cea348a7fe20e50ca22ff5d6df1c582"
 
 react-native-table-component@1.2.1:
   version "1.2.1"

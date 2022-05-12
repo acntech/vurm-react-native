@@ -1,13 +1,31 @@
-// Import the functions you need from the SDKs you need
-import { auth } from "./firebase";
+import { FacebookSocialButton } from "react-native-social-buttons";
+import { auth } from "../firebase/auth";
 import { FacebookAuthProvider, signInWithCredential } from "firebase/auth";
 import * as Facebook from "expo-facebook";
+
+const FacebookLoginButton = ({
+  buttonViewStyle,
+  setUser,
+  setLoginButtonDisabled,
+  disabled,
+}) => (
+  <FacebookSocialButton
+    buttonViewStyle={buttonViewStyle}
+    onPress={() => {
+      setLoginButtonDisabled(true);
+      loginWithFacebook(setUser, setLoginButtonDisabled).then(
+        setLoginButtonDisabled(false)
+      );
+    }}
+    disabled={disabled}
+  />
+);
 
 async function loginWithFacebook(setUser, setLoginButtonDisabled) {
   const appId = "498173242097723";
   await Facebook.initializeAsync({ appId });
 
-  setLoginButtonDisabled(true);
+  await setLoginButtonDisabled(true);
   const { type, token } = await Facebook.logInWithReadPermissionsAsync({
     permissions: ["public_profile"],
   });
@@ -32,4 +50,4 @@ async function loginWithFacebook(setUser, setLoginButtonDisabled) {
   // return auth;
 }
 
-export default loginWithFacebook;
+export default FacebookLoginButton;

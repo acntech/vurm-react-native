@@ -10,8 +10,8 @@ import Controller from "./Controller";
 import Grid from "./Grid";
 import { Alert } from "react-native";
 import { constainsCoord } from "../utilities/comparison";
-import * as rtdb from "../leaderboard/rtdb";
-import { auth } from "../auth/firebase";
+import * as rtdb from "../firebase/rtdb";
+import { auth } from "../firebase/auth";
 
 export default class Game extends Component {
   state = getInitialGameState();

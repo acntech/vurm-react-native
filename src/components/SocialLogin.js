@@ -104,13 +104,15 @@ export default SocialLogin = () => {
             title={"Sign Out"}
             onPress={onPressSignOut}
           ></Button>
-          <Button
-            style={{ alignSelf: "center" }}
-            title={"Delete My Data"}
-            color={"red"}
-            disabled={deleteMyDataButtonDisabled}
-            onPress={onPressDeleteMyData}
-          ></Button>
+          {!deleteMyDataButtonDisabled && (
+            <Button
+              style={{ alignSelf: "center" }}
+              title={"Delete My Data"}
+              color={"red"}
+              disabled={deleteMyDataButtonDisabled}
+              onPress={onPressDeleteMyData}
+            ></Button>
+          )}
         </View>
       )}
     </View>

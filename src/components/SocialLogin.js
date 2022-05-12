@@ -94,9 +94,9 @@ export default SocialLogin = () => {
           {/* <HorizontalSeparator
             text={` ${user.displayName}  `}
           ></HorizontalSeparator> */}
-
-          {/* <Text style={{ alignSelf: "center" }}>
-            Signed in as "{user?.displayName}"
+          {/* 
+          <Text style={{ alignSelf: "center" }}>
+            Signed in as {user?.displayName}
           </Text> */}
 
           <Button

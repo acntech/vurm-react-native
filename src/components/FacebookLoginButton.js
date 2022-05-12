@@ -1,47 +1,48 @@
 import { FacebookSocialButton } from "react-native-social-buttons";
-import { auth } from "../firebase/auth";
+import * as Facebook from "expo-auth-session/providers/facebook";
 import { FacebookAuthProvider, signInWithCredential } from "firebase/auth";
-import * as Facebook from "expo-facebook";
-
+import { useEffect, useState } from "react";
+import { auth } from "../firebase/auth";
+import { ResponseType } from "expo-auth-session";
 const FacebookLoginButton = ({
   buttonViewStyle,
   setUser,
   setDisabled,
   disabled,
-}) => (
-  <FacebookSocialButton
-    buttonViewStyle={buttonViewStyle}
-    onPress={() => {
-      setDisabled(true);
-      loginWithFacebook(setUser).finally(() => setDisabled(false));
-    }}
-    disabled={disabled}
-  />
-);
-
-async function loginWithFacebook(setUser) {
-  const appId = "498173242097723";
-  await Facebook.initializeAsync({ appId });
-
-  const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-    permissions: ["public_profile"],
+}) => {
+  const [request, response, promptAsync] = Facebook.useAuthRequest({
+    responseType: ResponseType.Token,
+    clientId: "498173242097723",
   });
+  const handlePress = () => {
+    setDisabled(true);
+    promptAsync().finally(() => {
+      setDisabled(false);
+    });
+  };
 
-  if (type === "success") {
-    // Build Firebase credential with the Facebook access token.
-    const credential = FacebookAuthProvider.credential(token);
+  useEffect(() => {
+    if (response?.type === "success") {
+      // Build Firebase credential with the Facebook access token.
+      const { access_token } = response.params;
 
-    // Sign in with credential from the Facebook user.
-    signInWithCredential(auth, credential)
-      .then(() => {
-        setUser(auth.currentUser);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  // return auth;
-}
+      const credential = FacebookAuthProvider.credential(access_token);
+      signInWithCredential(auth, credential)
+        .then(() => {
+          setUser(auth.currentUser);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  });
+  return (
+    <FacebookSocialButton
+      buttonViewStyle={buttonViewStyle}
+      onPress={handlePress}
+      disabled={disabled}
+    />
+  );
+};
 
 export default FacebookLoginButton;

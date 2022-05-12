@@ -1,54 +1,119 @@
 import { useState, useEffect } from "react";
-import { limitToLast, onValue, orderByChild, query } from "firebase/database";
+import {
+  child,
+  limitToLast,
+  onValue,
+  orderByChild,
+  query,
+} from "firebase/database";
 import { getUsersReference } from "../firebase/rtdb";
 import ScoreTable from "./ScoreTable";
 import { auth } from "../firebase/auth";
 
 export default Leaderboard = () => {
-  const [data, setData] = useState();
-  const usersReferenceOrderedByScore = query(
+  const [topData, setTopData] = useState([[]]);
+  const [uidData, setUidData] = useState([["", "Loading...", ""]]);
+  const topN = 20;
+  const allUsersReferenceOrderedByScore = query(
     getUsersReference(),
-    orderByChild("score"),
-    limitToLast(50)
+    orderByChild("score")
   );
 
   useEffect(() => {
-    const unsubscribe = onValue(
-      usersReferenceOrderedByScore,
-      (usersSnapshot) => {
+    const unsubscribeTopData = onValue(
+      allUsersReferenceOrderedByScore,
+      async (usersSnapshot) => {
         const leaderboardData = extractLeaderboardDataFromUsersSnapshot(
           usersSnapshot,
-          null
+          auth?.currentUser?.uid,
+          topN
         );
-        setData(leaderboardData.reverse());
+        console.log(leaderboardData.length);
+        if (leaderboardData.length > topN) {
+          setUidData(leaderboardData.pop());
+        } else {
+          setUidData([]);
+        }
+        setTopData(leaderboardData);
       }
     );
-    return unsubscribe;
+
+    // const unsubscribeUserData = onValue(
+    //   allUsersReferenceOrderedByScore,
+    //   async (usersSnapshot) => {
+    //     startRank = topData[topData.length - 1][0];
+    //     console.log(startRank);
+    //     const bottomRowData = extractLeaderboardDataFromUsersSnapshot(
+    //       usersSnapshot,
+    //       auth?.currentUser?.uid,
+    //       topN,
+    //       startRank
+    //     );
+    //     flattenedBottomArray = bottomRowData.flat();
+    //     flattenedBottomArray.pop();
+    //     setUidData(flattenedBottomArray);
+    //   }
+    // );
+
+    // setTopData(topData);
+    return () => {
+      unsubscribeTopData();
+      // unsubscribeUserData();
+    };
   }, []);
   return (
     <ScoreTable
-      scoreData={data}
+      scoreData={topData}
       scrollEnabled={true}
       highlightUid={auth?.currentUser?.uid}
+      outOfRangeRow={uidData}
     ></ScoreTable>
   );
 };
 
 export const extractLeaderboardDataFromUsersSnapshot = (
   usersSnapshot,
-  uidFilter
+  userUid,
+  topN
 ) => {
   let processedData = [];
   if (!usersSnapshot.hasChildren()) {
     return processedData;
   }
-  let rank = Object.keys(usersSnapshot.val()).length;
+
+  let negRank = 0;
+  let idx = 0;
+  let prevScore = 0;
+  let adjustedTopN = Object.keys(usersSnapshot.val()).length - topN - 1;
   usersSnapshot.forEach((child) => {
     const childValue = child.val();
-    childData = [rank--, childValue?.name, childValue?.score, child.key];
-    if (!uidFilter || uidFilter === child.key) {
+    const childKey = child.key;
+    const childScore = childValue?.score;
+    if (prevScore < childScore) {
+      negRank--;
+      prevScore = childScore;
+    }
+    const youIndicator = childKey == userUid ? " (You)" : "";
+    childData = [
+      negRank,
+      childValue?.name + youIndicator,
+      childScore,
+      childKey,
+    ];
+    if (!userUid || idx > adjustedTopN || childKey == userUid) {
       processedData.push(childData);
     }
+    idx++;
   });
-  return processedData;
+
+  if (processedData.length > 0) {
+    negRankIdx = 0;
+    minNegRank = processedData[processedData.length - 1][negRankIdx];
+    for (let i = 0; i < processedData.length; i++) {
+      processedData[i][negRankIdx] += Math.abs(minNegRank) + 1;
+    }
+  }
+  // console.log(minNegRank);
+
+  return processedData.reverse();
 };

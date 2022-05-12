@@ -242,7 +242,7 @@ const getInitialGameState = () => {
     berry: generateRandomCoord(snake.getCoords()),
     difficulty: { name: "default", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
     ticks: 0,
-    score: 0,
+    score: 1,
     user: auth.currentUser,
     highscore: -1,
     highscoreText: "",

@@ -27,7 +27,8 @@ export default SocialLogin = () => {
         (usersSnapshot) => {
           const userLeaderboardData = extractLeaderboardDataFromUsersSnapshot(
             usersSnapshot,
-            user.uid
+            user.uid,
+            0
           );
           !userLeaderboardData.length
             ? setDeleteMyDataButtonDisabled(true)
@@ -104,14 +105,17 @@ export default SocialLogin = () => {
             title={"Sign Out"}
             onPress={onPressSignOut}
           ></Button>
-          {!deleteMyDataButtonDisabled && (
+          {!deleteMyDataButtonDisabled ? (
             <Button
               style={{ alignSelf: "center" }}
               title={"Delete My Data"}
               color={"red"}
-              disabled={deleteMyDataButtonDisabled}
               onPress={onPressDeleteMyData}
             ></Button>
+          ) : (
+            <Text style={{ alignSelf: "center" }}>
+              No data stored for {user.displayName}
+            </Text>
           )}
         </View>
       )}

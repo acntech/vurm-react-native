@@ -56,6 +56,9 @@ export default class Game extends Component {
     ]);
   }
 
+  /**
+   * @deprecated The game no longer uses different difficulties
+   */
   difficultySelectionPrompt() {
     difficulties = [
       { name: "Analyst", tickIntervalMs: MIN_TICK_INTERVAL_MS * 30 },
@@ -85,7 +88,6 @@ export default class Game extends Component {
     );
     this.pull();
     this.placeBerry();
-    // await this.difficultySelectionPrompt();;
     this._interval = setInterval(() => {
       this.tick();
     }, this.state.difficulty.tickIntervalMs);

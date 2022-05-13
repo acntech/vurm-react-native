@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  child,
-  limitToLast,
-  onValue,
-  orderByChild,
-  query,
-} from "firebase/database";
+import { onValue, orderByChild, query } from "firebase/database";
 import { getUsersReference } from "../firebase/rtdb";
 import ScoreTable from "./ScoreTable";
 import { auth } from "../firebase/auth";
@@ -28,7 +22,6 @@ export default Leaderboard = () => {
           auth?.currentUser?.uid,
           topN
         );
-        console.log(leaderboardData.length);
         if (leaderboardData.length > topN) {
           setUidData(leaderboardData.pop());
         } else {
@@ -37,30 +30,11 @@ export default Leaderboard = () => {
         setTopData(leaderboardData);
       }
     );
-
-    // const unsubscribeUserData = onValue(
-    //   allUsersReferenceOrderedByScore,
-    //   async (usersSnapshot) => {
-    //     startRank = topData[topData.length - 1][0];
-    //     console.log(startRank);
-    //     const bottomRowData = extractLeaderboardDataFromUsersSnapshot(
-    //       usersSnapshot,
-    //       auth?.currentUser?.uid,
-    //       topN,
-    //       startRank
-    //     );
-    //     flattenedBottomArray = bottomRowData.flat();
-    //     flattenedBottomArray.pop();
-    //     setUidData(flattenedBottomArray);
-    //   }
-    // );
-
-    // setTopData(topData);
     return () => {
       unsubscribeTopData();
-      // unsubscribeUserData();
     };
   }, []);
+
   return (
     <ScoreTable
       scoreData={topData}
@@ -100,7 +74,7 @@ export const extractLeaderboardDataFromUsersSnapshot = (
       childScore,
       childKey,
     ];
-    if (!userUid || idx > adjustedTopN || childKey == userUid) {
+    if (idx > adjustedTopN || childKey == userUid) {
       processedData.push(childData);
     }
     idx++;

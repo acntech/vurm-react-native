@@ -13,7 +13,10 @@ import { LogBox } from "react-native";
 
 // firebase has yet to fix this, see https://github.com/firebase/firebase-js-sdk/issues/1847
 LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
-
+// See https://developer.apple.com/forums/thread/702391
+LogBox.ignoreLogs([
+  "[UIKitCore] -[UIApplication getKeyboardDevicePropertiesForSenderID:shouldUpdate:usingSyntheticEvent:],",
+]);
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (

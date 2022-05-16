@@ -37,7 +37,7 @@ export default SocialLogin = () => {
       );
       return unsubscribe;
     }
-  }, [user]);
+  }, []);
 
   const onPressSignOut = () => {
     signOut(auth)

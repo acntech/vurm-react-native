@@ -1,0 +1,34 @@
+import { Modal, ActivityIndicator, StyleSheet } from "react-native";
+import { SafeAreaView, View } from "react-native";
+import { useState } from "react";
+
+export default withLoadingOverlay = (ComponentToWrap) => (props) => {
+  overlayVisible = props?.overlayVisible ? props.overlayVisible : false;
+
+  return (
+    <SafeAreaView>
+      <Modal visible={overlayVisible} animationType={"none"} transparent={true}>
+        <View style={styles.centeredView}>
+          <ActivityIndicator size="large" />
+        </View>
+      </Modal>
+      <View style={styles.hideView}>
+        <ComponentToWrap {...props}></ComponentToWrap>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    // marginTop: 22,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+  },
+  hideView: {
+    // flex: 1,
+    backgroundColor: "rgb(255,255,255)",
+  },
+});

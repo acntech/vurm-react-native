@@ -1,5 +1,20 @@
+import { useEffect, useState } from "react";
 import Game from "../components/Game";
+import withLoadingOverlay from "../components/withLoadingOverlay";
 
-const GameScreen = ({ navigation }) => <Game navigation={navigation} />;
+const GameWithLoadingOverlay = withLoadingOverlay(Game);
 
+const GameScreen = ({ navigation }) => {
+  const [overlayVisible, setOverlayVisible] = useState(true);
+  return (
+    <GameWithLoadingOverlay
+      overlayVisible={overlayVisible}
+      navigation={navigation}
+      onFinishedLoading={() => {
+        setOverlayVisible(false);
+      }}
+    />
+  );
+  // return <Game navigation={navigation}></Game>;
+};
 export default GameScreen;

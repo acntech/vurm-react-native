@@ -12,9 +12,8 @@ export default withLoadingOverlay = (ComponentToWrap) => (props) => {
           <ActivityIndicator size="large" />
         </View>
       </Modal>
-      <View style={styles.hideView}>
-        <ComponentToWrap {...props}></ComponentToWrap>
-      </View>
+
+      <ComponentToWrap {...props}></ComponentToWrap>
     </SafeAreaView>
   );
 };
@@ -26,9 +25,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // marginTop: 22,
     backgroundColor: "rgba(255, 255, 255, 0.9)",
-  },
-  hideView: {
-    // flex: 1,
-    backgroundColor: "rgb(255,255,255)",
   },
 });

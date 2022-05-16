@@ -12,6 +12,7 @@ import { Alert } from "react-native";
 import { constainsCoord } from "../utilities/comparison";
 import * as rtdb from "../firebase/rtdb";
 import { auth } from "../firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default class Game extends Component {
   constructor(props) {
@@ -21,25 +22,36 @@ export default class Game extends Component {
     this.berry = generateRandomCoord(this.snake.getCoords());
     this.boundBerryEaten = this.berryEaten.bind(this);
     this.boundSetDirection = this.snake.setDirection.bind(this.snake);
+    this._setupAuthListener();
   }
 
   componentDidMount() {
     this.props.navigation.addListener("transitionStart", () => {
-      clearInterval(this._interval);
+      this.clearGameInterval();
     });
-
     boundStart = this.start.bind(this);
     this.pull().finally(() => {
-      if (this.props?.onFinishedLoading) {
-        this.props.onFinishedLoading();
-        boundStart();
-      }
+      setTimeout(() => {
+        if (this.props?.onFinishedLoading) {
+          this.props.onFinishedLoading();
+          boundStart();
+        }
+      }, 1000);
     });
   }
 
   componentWillUnmount() {
     this.push();
+    if (this.unsubscribe) this.unsubscribe();
     clearInterval(this._interval);
+  }
+
+  _setupAuthListener() {
+    this.unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user != null) {
+        this.pull();
+      }
+    });
   }
 
   isGameOver() {
@@ -93,16 +105,19 @@ export default class Game extends Component {
     });
   }
 
+  clearGameInterval() {
+    if (this._interval) clearInterval(this._interval);
+  }
+
   start() {
+    this.clearGameInterval();
     this._interval = setInterval(() => {
       this.tick();
     }, this.state.difficulty.tickIntervalMs);
   }
 
   restart() {
-    this.pull();
-    this.reset();
-    this.start();
+    this.pull().then(this.reset()).then(this.start());
   }
 
   reset() {
@@ -110,11 +125,12 @@ export default class Game extends Component {
     this.snake = new Snake();
     this.berry = generateRandomCoord(this.snake.getCoords());
     this.boundSetDirection = this.snake.setDirection.bind(this.snake);
+    this.clearGameInterval();
   }
 
-  tick() {
-    if (this.isGameOver() || this.state.ticks > 500) {
-      clearInterval(this._interval);
+  async tick() {
+    if (this.isGameOver()) {
+      this.clearGameInterval();
       this.push();
       this.gameOverPrompt();
     } else {
@@ -144,7 +160,7 @@ export default class Game extends Component {
   }
 
   async push() {
-    user = this.state.user;
+    user = auth.currentUser;
     highscore = this.state.highscore;
     difficulty = this.state.difficulty.name;
 
@@ -164,29 +180,35 @@ export default class Game extends Component {
 
   async pull() {
     await this._pullHighscore();
-    await this._pullHighscoreDifficultyName();
     await this.updateHighscore();
   }
 
   async _pullHighscore() {
-    setHighscoreCallback = this._setHighscore.bind(this);
-    await rtdb.getUserProperty(
-      this.state.user,
-      "score",
-      0,
-      setHighscoreCallback
-    );
+    if (auth.currentUser) {
+      setHighscoreCallback = this._setHighscore.bind(this);
+      await rtdb.getUserProperty(
+        auth.currentUser,
+        "score",
+        0,
+        setHighscoreCallback
+      );
+    }
   }
 
+  /**
+  @deprecated 
+  */
   async _pullHighscoreDifficultyName() {
-    setHighscoreDifficultyNameCallback =
-      this._setHighscoreDifficultyName.bind(this);
-    rtdb.getUserProperty(
-      this.state.user,
-      "difficulty",
-      "",
-      setHighscoreDifficultyNameCallback
-    );
+    if (auth.currentUser) {
+      setHighscoreDifficultyNameCallback =
+        this._setHighscoreDifficultyName.bind(this);
+      rtdb.getUserProperty(
+        auth.currentUser,
+        "difficulty",
+        "",
+        setHighscoreDifficultyNameCallback
+      );
+    }
   }
 
   async _setHighscore(score) {
@@ -194,6 +216,9 @@ export default class Game extends Component {
     this._updateHighscoreText();
   }
 
+  /**
+   * @deprecated
+   */
   async _setHighscoreDifficultyName(highscoreDifficultyName) {
     this.setState({ highscoreDifficultyName: highscoreDifficultyName });
     this._updateHighscoreText();
@@ -203,15 +228,14 @@ export default class Game extends Component {
     if (this.state.score > this.state.highscore) {
       this.setState({
         highscore: this.state.score,
-        highscoreDifficultyName: this.state.difficulty.name,
       });
       this._updateHighscoreText();
     }
   }
 
   async _updateHighscoreText() {
-    highscoreText = "";
-    if (!this.state.user) {
+    let highscoreText = "";
+    if (!auth.currentUser) {
       highscoreText = "Log in to track highscore";
     } else {
       if (this.state.highscore == -1) {
@@ -253,10 +277,8 @@ const getInitialGameState = () => ({
   difficulty: { name: "default", tickIntervalMs: MIN_TICK_INTERVAL_MS * 2 },
   ticks: 0,
   score: 0,
-  user: auth.currentUser,
   highscore: -1,
-  highscoreText: "",
-  highscoreDifficultyName: "",
+  highscoreText: "Retrieving highscore...",
 });
 
 const styles = StyleSheet.create({

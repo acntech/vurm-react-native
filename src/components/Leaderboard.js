@@ -3,15 +3,22 @@ import { onValue, orderByChild, query } from "firebase/database";
 import { getUsersReference } from "../firebase/rtdb";
 import ScoreTable from "./ScoreTable";
 import { auth } from "../firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default Leaderboard = () => {
   const [topData, setTopData] = useState([[]]);
   const [uidData, setUidData] = useState([["", "Loading...", ""]]);
+  const [uid, setUid] = useState(auth?.currentUser?.uid);
+
   const topN = 20;
   const allUsersReferenceOrderedByScore = query(
     getUsersReference(),
     orderByChild("score")
   );
+
+  const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
+    setUid(user?.uid);
+  });
 
   useEffect(() => {
     const unsubscribeTopData = onValue(
@@ -19,7 +26,7 @@ export default Leaderboard = () => {
       async (usersSnapshot) => {
         const leaderboardData = extractLeaderboardDataFromUsersSnapshot(
           usersSnapshot,
-          auth?.currentUser?.uid,
+          uid,
           topN
         );
         if (leaderboardData.length > topN) {
@@ -32,14 +39,15 @@ export default Leaderboard = () => {
     );
     return () => {
       unsubscribeTopData();
+      unsubscribeOnAuthStateChanged();
     };
-  }, []);
+  }, [uid]);
 
   return (
     <ScoreTable
       scoreData={topData}
       scrollEnabled={true}
-      highlightUid={auth?.currentUser?.uid}
+      highlightUid={uid}
       outOfRangeRow={uidData}
     ></ScoreTable>
   );

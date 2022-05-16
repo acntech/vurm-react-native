@@ -6,7 +6,7 @@ import SocialLogin from "../components/SocialLogin";
 const LeaderboardScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Leaderboard scrollEnabled={true}></Leaderboard>
+      <Leaderboard></Leaderboard>
       <SocialLogin></SocialLogin>
     </SafeAreaView>
   );

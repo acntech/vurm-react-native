@@ -5,7 +5,6 @@ import { auth } from "../firebase/auth";
 import { useState, useEffect } from "react";
 import { deleteUserData, getUsersReference } from "../firebase/rtdb";
 import { extractLeaderboardDataFromUsersSnapshot } from "./Leaderboard";
-import HorizontalSeparator from "./HorizontalSeparator";
 import FacebookLoginButton from "./FacebookLoginButton";
 import GoogleLoginButton from "./GoogleLoginButton";
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 uuid = require("uuid");
 gen = require("unique-names-generator");
 fs = require("fs");
@@ -7,7 +9,7 @@ numEntries = 100;
 maxScore = 50;
 filepath = "/Users/christoffer.sorensen/leaderboardJson.json";
 for (i = 0; i < numEntries; i++) {
-  res["users"][uuid.v4()] = {
+  res.users[uuid.v4()] = {
     name: gen.uniqueNamesGenerator({
       dictionaries: [gen.adjectives, gen.colors, gen.animals],
       style: "capital",

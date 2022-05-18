@@ -32,7 +32,9 @@ export default Grid = ({ snakeCoords, berryCoord }) => {
     if (berryCoord != null) {
       newData[coordToIdx(berryCoord)].hasBerry = true;
     }
-    newData[coordToIdx(snakeCoords[0])].hasSnakeHead = true;
+    if (snakeCoords.length > 0) {
+      newData[coordToIdx(snakeCoords[0])].hasSnakeHead = true;
+    }
 
     setGridData(newData);
     prevSnakeCoords.current = snakeCoords;

@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FacebookLoginButton /> renders correctly 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#485a96",
+      "borderColor": "#fff",
+      "borderRadius": 5,
+      "borderWidth": 0.5,
+      "flexDirection": "row",
+      "height": 40,
+      "justifyContent": "center",
+      "margin": 5,
+      "marginBottom": 0,
+      "opacity": 1,
+      "position": "relative",
+      "width": 220,
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      Object {
+        "alignSelf": "center",
+        "height": 25,
+        "marginLeft": 15,
+        "padding": 10,
+        "resizeMode": "stretch",
+        "width": 25,
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "#fff",
+        "marginLeft": 20,
+        "marginRight": 20,
+      }
+    }
+  >
+    Sign in with Facebook
+  </Text>
+</View>
+`;

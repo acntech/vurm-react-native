@@ -26,7 +26,7 @@ export default class Game extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.addListener("transitionStart", () => {
+    this.props?.navigation?.addListener("transitionStart", () => {
       this.clearGameInterval();
     });
     boundStart = this.start.bind(this);

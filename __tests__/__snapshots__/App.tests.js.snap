@@ -175,6 +175,47 @@ exports[`<App /> renders correctly 1`] = `
                 Instructions
               </Text>
             </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "backgroundColor": "oldlace",
+                  "borderRadius": 4,
+                  "borderWidth": 0,
+                  "marginBottom": 5,
+                  "minWidth": "50%",
+                  "opacity": 1,
+                  "paddingHorizontal": 8,
+                  "paddingVertical": 8,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "color": "coral",
+                    },
+                  ]
+                }
+              >
+                Leaderboard
+              </Text>
+            </View>
           </View>
         </RCTSafeAreaView>
       </View>

@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainMenuScreen /> renders correctly 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Object {
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 26,
+        "marginBottom": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    Vurm
+  </Text>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "flexDirection": "column",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "center",
+          "backgroundColor": "coral",
+          "borderRadius": 4,
+          "borderWidth": 0,
+          "marginBottom": 5,
+          "minWidth": "50%",
+          "opacity": 1,
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "400",
+              "textAlign": "center",
+            },
+            Object {
+              "color": "white",
+            },
+          ]
+        }
+      >
+        Start Game
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "center",
+          "backgroundColor": "oldlace",
+          "borderRadius": 4,
+          "borderWidth": 0,
+          "marginBottom": 5,
+          "minWidth": "50%",
+          "opacity": 1,
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "400",
+              "textAlign": "center",
+            },
+            Object {
+              "color": "coral",
+            },
+          ]
+        }
+      >
+        Instructions
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "center",
+          "backgroundColor": "oldlace",
+          "borderRadius": 4,
+          "borderWidth": 0,
+          "marginBottom": 5,
+          "minWidth": "50%",
+          "opacity": 1,
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "fontWeight": "400",
+              "textAlign": "center",
+            },
+            Object {
+              "color": "coral",
+            },
+          ]
+        }
+      >
+        Leaderboard
+      </Text>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;

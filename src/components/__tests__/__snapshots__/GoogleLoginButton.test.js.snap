@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GoogleLoginButton /> renders correctly 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "borderColor": "#fff",
+      "borderRadius": 5,
+      "borderWidth": 0.5,
+      "flexDirection": "row",
+      "height": 40,
+      "justifyContent": "center",
+      "margin": 5,
+      "opacity": 1,
+      "width": 220,
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      Object {
+        "height": 25,
+        "marginLeft": 15,
+        "padding": 10,
+        "resizeMode": "stretch",
+        "width": 25,
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "#575757",
+        "marginLeft": 15,
+        "marginRight": 20,
+      }
+    }
+  >
+    Sign in with Google
+  </Text>
+</View>
+`;

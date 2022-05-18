@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Controller /> renders correctly 1`] = `
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "flexDirection": "column",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignContent": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "coral",
+              "borderRadius": 10000,
+              "margin": 20,
+              "minWidth": "50.3%",
+              "opacity": 1,
+              "padding": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 15,
+                  "fontWeight": "900",
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            ↑
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignContent": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "coral",
+              "borderRadius": 10000,
+              "margin": 20,
+              "minWidth": "50.3%",
+              "opacity": 1,
+              "padding": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 15,
+                  "fontWeight": "900",
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            ←
+          </Text>
+        </View>
+      </View>
+      <View
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "coral",
+              "borderRadius": 10000,
+              "margin": 20,
+              "minWidth": "50.3%",
+              "opacity": 1,
+              "padding": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 15,
+                  "fontWeight": "900",
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            →
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignContent": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+      >
+        <View
+          accessible={true}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "coral",
+              "borderRadius": 10000,
+              "margin": 20,
+              "minWidth": "50.3%",
+              "opacity": 1,
+              "padding": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 15,
+                  "fontWeight": "900",
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            ↓
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

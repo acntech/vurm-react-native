@@ -1,3 +1,4 @@
+import { NUM_COLUMNS } from "../../constants";
 import { createCoord } from "../../utilities/conversion";
 import Snake, { initializeSnakeCoords } from "../Snake";
 
@@ -59,20 +60,48 @@ describe("snake", () => {
       snake.setDirection("R");
 
       // Assert
-      expect(dx).toStrictEqual(-1);
-      expect(dy).toStrictEqual(0);
+      expect(dx).toBe(-1);
+      expect(dy).toBe(0);
       expect(snake.getDirection()).toBe("L");
     });
+
+    it("wraps around the grid when moving out of bounds to the left", () => {
+      // Arrange
+      const snake = new Snake();
+      snake.setDirection("L");
+      let hasReachedBorder = false;
+      const maxMoves = NUM_COLUMNS;
+
+      // Act
+      for (i = 0; i < maxMoves; i++) {
+        if (snake.getHead().x == 0) {
+          hasReachedBorder = true;
+          break;
+        }
+        snake.move();
+      }
+      if (!hasReachedBorder) {
+        throw new Error("Snake failed to reach border");
+      }
+      headBeforeWrap = snake.getHead();
+      snake.move();
+      headAfterWrap = snake.getHead();
+
+      // Assert
+      expect(headAfterWrap.y).toBe(headBeforeWrap.y);
+      expect(headAfterWrap.x).toBe(NUM_COLUMNS - 1);
+    });
   });
+
   describe("digests berries as expected", () => {
-    it("gains one unit in length after eating a berry and moving its own length", () => {
+    it("gains one unit in length after eating a berry and moving its own length", async () => {
       // Arrange
       const snake = new Snake();
       const beforeLength = snake.getCoords().length;
       const berry = snake.getHead();
 
       // Act
-      snake.eat(berry, () => {});
+      await snake.eat(berry, () => {});
       for (let i = 0; i < beforeLength; i++) {
         snake.move();
       }

@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { unicodeArrowToButtonLabelDirection } from "../utilities/conversion";
 
-export default Controller = ({ setSnakeDirection }) => {
+export default Controller = ({ setSnakeDirection: setDirectionCallback }) => {
   const [directions, setDirections] = useState([]);
 
   const handleOnPressIn = (direction) => {
     if (!directions.includes(direction)) {
       setDirections([...directions, direction]);
-      setSnakeDirection(direction);
+      setDirectionCallback(direction);
     }
   };
 
   const handleOnPressOut = (direction) => {
     if (directions.length == 0) {
-      setSnakeDirection(direction);
+      setDirectionCallback(direction);
     }
 
     var idx = directions.indexOf(direction);
@@ -22,7 +22,7 @@ export default Controller = ({ setSnakeDirection }) => {
       const newDirections = [...directions];
       newDirections.splice(idx, 1);
       setDirections(newDirections);
-      setSnakeDirection(newDirections[newDirections.length - 1]);
+      setDirectionCallback(newDirections[newDirections.length - 1]);
     }
   };
 
@@ -81,10 +81,8 @@ const styles = new StyleSheet.create({
     borderRadius: 10000,
     backgroundColor: "coral",
     alignSelf: "center",
-    // marginBottom: 10,
     margin: 20,
     minWidth: "50.3%",
-    // maxWidth: "10.0%",
   },
   buttonLabel: {
     fontSize: 15,

@@ -23,7 +23,7 @@ const GoogleLoginButton = ({
 
   useEffect(() => {
     if (response?.type === "success") {
-      // Build Firebase credential with the Facebook access token.
+      // Build Firebase credential with the Google ID token.
       const { id_token } = response.params;
 
       const credential = GoogleAuthProvider.credential(id_token);

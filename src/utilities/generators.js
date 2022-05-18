@@ -8,6 +8,7 @@ import {
   colors,
   animals,
 } from "unique-names-generator";
+
 export const generateRandomCoord = (invalidCoords) => {
   const numIdxs = NUM_COLUMNS * NUM_ROWS;
   const idxs = Array.from({ length: numIdxs }, (v, k) => k);

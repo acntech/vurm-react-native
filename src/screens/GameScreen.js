@@ -15,6 +15,5 @@ const GameScreen = ({ navigation }) => {
       }}
     />
   );
-  // return <Game navigation={navigation}></Game>;
 };
 export default GameScreen;

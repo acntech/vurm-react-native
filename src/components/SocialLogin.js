@@ -48,17 +48,13 @@ export default SocialLogin = () => {
   }, [user]);
 
   const onPressSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        setUser(auth.currentUser);
-      })
-      .catch((error) => {
-        Alert.alert("Failed to sign out", [
-          {
-            text: "OK",
-          },
-        ]);
-      });
+    signOut(auth).catch((error) => {
+      Alert.alert("Failed to sign out", [
+        {
+          text: "OK",
+        },
+      ]);
+    });
   };
   const onPressDeleteMyData = () => {
     Alert.alert(

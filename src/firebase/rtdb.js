@@ -1,12 +1,4 @@
-import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-  get,
-  remove,
-  child,
-} from "firebase/database";
+import { getDatabase, ref, set, get, remove, child } from "firebase/database";
 
 const getReference = (path) => {
   try {
@@ -72,12 +64,41 @@ export const getUserProperty = async (
   return property;
 };
 
-function setupHighscoreListener(user) {
-  if (user != null) {
-    const reference = getUserReference(user);
-    onValue(reference, (snapshot) => {
-      const highscore = snapshot.val().highscore;
-      console.log("New high score: " + highscore);
-    });
+export const extractDataFromUsersSnapshot = (usersSnapshot, userUid, topN) => {
+  let processedData = [];
+  if (!usersSnapshot.hasChildren()) {
+    return processedData;
   }
-}
+  let negRank = 0;
+  let idx = 0;
+  let prevScore = 0;
+  let adjustedTopN = Object.keys(usersSnapshot.val()).length - topN - 1;
+
+  usersSnapshot.forEach((child) => {
+    const childValue = child.val();
+    if (prevScore < childValue?.score) {
+      negRank--;
+      prevScore = childValue.score;
+    }
+    const youIndicator = child?.key == userUid ? " (You)" : "";
+    childData = [
+      negRank,
+      childValue?.name + youIndicator,
+      childValue?.score,
+      child?.key,
+    ];
+    if (idx > adjustedTopN || child?.key == userUid) {
+      processedData.push(childData);
+    }
+    idx++;
+  });
+
+  if (processedData.length > 0) {
+    negRankIdx = 0;
+    minNegRank = processedData[processedData.length - 1][negRankIdx];
+    for (let i = 0; i < processedData.length; i++) {
+      processedData[i][negRankIdx] += Math.abs(minNegRank) + 1;
+    }
+  }
+  return processedData.reverse();
+};

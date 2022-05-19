@@ -1,0 +1,601 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Leaderboard /> renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Array [
+          undefined,
+          Object {
+            "borderBottomWidth": 0,
+            "borderColor": "white",
+            "borderLeftWidth": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            undefined,
+            0,
+            Object {
+              "flexDirection": "row",
+              "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "coral",
+              "height": 40,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderColor": "white",
+                "borderRightWidth": 0,
+                "borderTopWidth": 0,
+              },
+              Object {
+                "justifyContent": "center",
+              },
+              undefined,
+              undefined,
+              Object {
+                "flex": 1,
+              },
+              false,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "textAlign": "center",
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                },
+              ]
+            }
+          >
+            Rank
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "borderColor": "white",
+                "borderRightWidth": 0,
+                "borderTopWidth": 0,
+              },
+              Object {
+                "justifyContent": "center",
+              },
+              undefined,
+              undefined,
+              Object {
+                "flex": 5,
+              },
+              false,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "textAlign": "center",
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                },
+              ]
+            }
+          >
+            Nickname
+          </Text>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "borderColor": "white",
+                "borderRightWidth": 0,
+                "borderTopWidth": 0,
+              },
+              Object {
+                "justifyContent": "center",
+              },
+              undefined,
+              undefined,
+              Object {
+                "flex": 1,
+              },
+              false,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "textAlign": "center",
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                },
+              ]
+            }
+          >
+            Score
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    bounces={false}
+    scrollEnabled={true}
+  >
+    <View>
+      <View
+        style={
+          Array [
+            undefined,
+            Object {
+              "borderBottomWidth": 0,
+              "borderColor": "#000",
+              "borderLeftWidth": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              undefined,
+              0,
+              Object {
+                "flexDirection": "row",
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "backgroundColor": "oldlace",
+                },
+                false,
+              ],
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 1,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              1
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 5,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              BigPurpleDonkey
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 1,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              3
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              undefined,
+              0,
+              Object {
+                "flexDirection": "row",
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "backgroundColor": "oldlace",
+                },
+                false,
+              ],
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 1,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              2
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 5,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              BigRedDonkey
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 1,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              2
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              undefined,
+              0,
+              Object {
+                "flexDirection": "row",
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "backgroundColor": "oldlace",
+                },
+                false,
+              ],
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 1,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              3
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 5,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              BigBlueDonkey
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#000",
+                  "borderRightWidth": 0,
+                  "borderTopWidth": 0,
+                },
+                Object {
+                  "justifyContent": "center",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "flex": 1,
+                },
+                false,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Array [
+                    Object {
+                      "color": "coral",
+                      "margin": 6,
+                      "textAlign": "center",
+                    },
+                    false,
+                  ],
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                ]
+              }
+            >
+              1
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

@@ -1,10 +1,14 @@
 import { View, Text, Button, Alert, StyleSheet } from "react-native";
 import { signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { onValue, orderByChild, query } from "firebase/database";
 import { auth } from "../firebase/auth";
 import { useState, useEffect } from "react";
-import { deleteUserData, getUsersReference } from "../firebase/rtdb";
-import { extractLeaderboardDataFromUsersSnapshot } from "./Leaderboard";
+import {
+  deleteUserData,
+  getUsersReference,
+  extractDataFromUsersSnapshot,
+} from "../firebase/rtdb";
 import FacebookLoginButton from "./FacebookLoginButton";
 import GoogleLoginButton from "./GoogleLoginButton";
 
@@ -14,29 +18,34 @@ export default SocialLogin = () => {
   const [deleteMyDataButtonDisabled, setDeleteMyDataButtonDisabled] =
     useState(true);
 
+  const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
+    setUser(user);
+  });
+
   useEffect(() => {
     const usersReferenceOrderedByScore = query(
       getUsersReference(),
       orderByChild("score")
     );
 
-    if (user) {
-      const unsubscribe = onValue(
-        usersReferenceOrderedByScore,
-        (usersSnapshot) => {
-          const userLeaderboardData = extractLeaderboardDataFromUsersSnapshot(
-            usersSnapshot,
-            user.uid,
-            0
-          );
-          !userLeaderboardData.length
-            ? setDeleteMyDataButtonDisabled(true)
-            : setDeleteMyDataButtonDisabled(false);
-        }
-      );
-      return unsubscribe;
-    }
-  }, []);
+    const unsubscribeUserData = onValue(
+      usersReferenceOrderedByScore,
+      (usersSnapshot) => {
+        const userLeaderboardData = extractDataFromUsersSnapshot(
+          usersSnapshot,
+          user?.uid,
+          0
+        );
+        !userLeaderboardData.length
+          ? setDeleteMyDataButtonDisabled(true)
+          : setDeleteMyDataButtonDisabled(false);
+      }
+    );
+    return () => {
+      unsubscribeUserData();
+      unsubscribeOnAuthStateChanged();
+    };
+  }, [user]);
 
   const onPressSignOut = () => {
     signOut(auth)
@@ -63,7 +72,7 @@ export default SocialLogin = () => {
         {
           text: "Delete",
           onPress: () => {
-            deleteUserData(auth.currentUser);
+            deleteUserData(user);
             setDeleteMyDataButtonDisabled(true);
           },
           style: "destructive",

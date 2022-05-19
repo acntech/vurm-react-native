@@ -47,7 +47,7 @@ exports[`<Game /> renders correctly 1`] = `
     data={
       Array [
         Object {
-          "hasBerry": false,
+          "hasBerry": true,
           "hasSnake": false,
           "hasSnakeHead": false,
           "id": 0,
@@ -5135,7 +5135,7 @@ exports[`<Game /> renders correctly 1`] = `
           "id": 847,
         },
         Object {
-          "hasBerry": true,
+          "hasBerry": false,
           "hasSnake": false,
           "hasSnakeHead": false,
           "id": 848,
@@ -5502,7 +5502,9 @@ exports[`<Game /> renders correctly 1`] = `
                   "paddingVertical": 9.666666666666666,
                 },
                 false,
-                false,
+                Object {
+                  "backgroundColor": "purple",
+                },
                 false,
               ]
             }
@@ -21990,9 +21992,7 @@ exports[`<Game /> renders correctly 1`] = `
                   "paddingVertical": 9.666666666666666,
                 },
                 false,
-                Object {
-                  "backgroundColor": "purple",
-                },
+                false,
                 false,
               ]
             }

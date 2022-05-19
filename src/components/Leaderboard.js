@@ -20,7 +20,6 @@ export default Leaderboard = () => {
   );
 
   const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
-    console.log(user?.uid);
     setUid(user?.uid);
   });
 

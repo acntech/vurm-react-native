@@ -92,7 +92,7 @@ export default class Snake {
   async eat(berry, berryEaten) {
     const head = this.getHead();
     if (isEqualCoords(berry, head)) {
-      console.log("YUM!");
+      // console.log("YUM!");
       this.digestionCoords.unshift(berry);
       berryEaten();
     }

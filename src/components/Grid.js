@@ -54,9 +54,6 @@ export default Grid = ({ snakeCoords, berryCoord }) => {
       keyExtractor={keyExtractor}
       scrollEnabled={false}
       initialNumToRender={gridData.length}
-      // maxToRenderPerBatch={snakeCoords.length + 1}
-      // updateCellsBatchingPeriod={tickRate + 10}
-      // removeClippedSubviews={true}
     />
   );
 };

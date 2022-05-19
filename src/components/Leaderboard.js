@@ -67,22 +67,21 @@ export const extractLeaderboardDataFromUsersSnapshot = (
   let idx = 0;
   let prevScore = 0;
   let adjustedTopN = Object.keys(usersSnapshot.val()).length - topN - 1;
+
   usersSnapshot.forEach((child) => {
     const childValue = child.val();
-    const childKey = child.key;
-    const childScore = childValue?.score;
-    if (prevScore < childScore) {
+    if (prevScore < childValue?.score) {
       negRank--;
-      prevScore = childScore;
+      prevScore = childValue.score;
     }
-    const youIndicator = childKey == userUid ? " (You)" : "";
+    const youIndicator = child?.key == userUid ? " (You)" : "";
     childData = [
       negRank,
       childValue?.name + youIndicator,
-      childScore,
-      childKey,
+      childValue?.score,
+      child?.key,
     ];
-    if (idx > adjustedTopN || childKey == userUid) {
+    if (idx > adjustedTopN || child?.key == userUid) {
       processedData.push(childData);
     }
     idx++;
@@ -95,7 +94,5 @@ export const extractLeaderboardDataFromUsersSnapshot = (
       processedData[i][negRankIdx] += Math.abs(minNegRank) + 1;
     }
   }
-  // console.log(minNegRank);
-
   return processedData.reverse();
 };

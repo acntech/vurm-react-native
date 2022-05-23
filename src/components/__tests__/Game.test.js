@@ -1,7 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react-native";
+import { render, waitFor } from "@testing-library/react-native";
 import Game from "../Game";
 import { createCoord } from "../../utilities/conversion";
+
+jest.useFakeTimers();
 
 const mockCreateCoord = (x, y) => createCoord(x, y);
 jest.mock("../../utilities/generators", () => {

@@ -34,8 +34,8 @@ export default class Game extends Component {
       setTimeout(() => {
         if (this.props?.onFinishedLoading) {
           this.props.onFinishedLoading();
-          boundStart();
         }
+        boundStart();
       }, 1000);
     });
   }
@@ -43,7 +43,7 @@ export default class Game extends Component {
   componentWillUnmount() {
     this.push();
     if (this.unsubscribe) this.unsubscribe();
-    clearInterval(this._interval);
+    this.clearGameInterval();
   }
 
   _setupAuthListener() {

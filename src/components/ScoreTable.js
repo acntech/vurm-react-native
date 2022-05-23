@@ -11,7 +11,8 @@ export default ScoreTable = ({
 }) => {
   const data = deepcopy(scoreData);
   const extraRow = deepcopy(outOfRangeRow);
-  extraRow.pop();
+  const extraRowUid = extraRow.pop();
+  const highlightExtraRow = highlightUid == extraRowUid && extraRowUid;
 
   return (
     <View style={{ flex: 1 }}>
@@ -54,8 +55,11 @@ export default ScoreTable = ({
             <Row
               flexArr={columnFlex}
               data={extraRow}
-              style={[styles.row, styles.highlighted]}
-              textStyle={[styles.rowText, styles.highlightedText]}
+              style={[styles.row, highlightExtraRow && styles.highlighted]}
+              textStyle={[
+                styles.rowText,
+                highlightExtraRow && styles.highlightedText,
+              ]}
             ></Row>
           </Table>
         )}

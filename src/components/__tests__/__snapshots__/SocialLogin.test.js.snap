@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SocialLogin /> renders correctly before login 1`] = `
+<View>
+  <View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#485a96",
+          "borderColor": "#fff",
+          "borderRadius": 5,
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+          "margin": 5,
+          "marginBottom": 0,
+          "opacity": 1,
+          "position": "relative",
+          "width": 220,
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 25,
+            "marginLeft": 15,
+            "padding": 10,
+            "resizeMode": "stretch",
+            "width": 25,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#fff",
+            "marginLeft": 20,
+            "marginRight": 20,
+          }
+        }
+      >
+        Sign in with Facebook
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#ffffff",
+          "borderColor": "#fff",
+          "borderRadius": 5,
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+          "margin": 5,
+          "opacity": 1,
+          "width": 220,
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "height": 25,
+            "marginLeft": 15,
+            "padding": 10,
+            "resizeMode": "stretch",
+            "width": 25,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#575757",
+            "marginLeft": 15,
+            "marginRight": 20,
+          }
+        }
+      >
+        Sign in with Google
+      </Text>
+    </View>
+  </View>
+</View>
+`;

@@ -13,7 +13,7 @@ import FacebookLoginButton from "./FacebookLoginButton";
 import GoogleLoginButton from "./GoogleLoginButton";
 
 export default SocialLogin = () => {
-  const [user, setUser] = useState(auth.currentUser);
+  const [user, setUser] = useState(auth?.currentUser);
   const [loginInProgress, setLoginInProgress] = useState(false);
   const [deleteMyDataButtonDisabled, setDeleteMyDataButtonDisabled] =
     useState(true);

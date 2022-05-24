@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const firebaseConfig = {
+  // NOTE: This API-key is not a secret, see https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public/37484053#37484053
   apiKey: "AIzaSyB4i87NzfL1Pk_V2UpD5FSe1vwWV3-LBNs",
   authDomain: "leaderboard-rn.firebaseapp.com",
   databaseURL: "https://leaderboard-rn-default-rtdb.firebaseio.com",

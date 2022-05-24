@@ -36,6 +36,7 @@ This is a non-exhaustive list of issues in the project, be it code performance, 
 - The Game-component (`./src/components/Game.js`) is still a class component, and should be rewritten to a functional component.
 - All components (except the modal loading screen) have a few unit tests, as well as the Snake-class (`./src/classes/Snake.js`). The component tests mostly just compare their render to a snapshot, but some test some other things as well. **The unit tests of this projects should be heavily expanded to cover all units used in `./src`**.
 - All colors have been moved into its own file (`src/colors.js`), from which all components can import them. However, there are perhaps better alternatives to manage global themes (see e.g. [React Navigation's Themes](https://reactnavigation.org/docs/themes/))
+- There are currently no sounds. A game should have sounds, right?
 
 ## Feedback
 

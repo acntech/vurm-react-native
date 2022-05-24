@@ -1,6 +1,5 @@
 import { Modal, ActivityIndicator, StyleSheet } from "react-native";
 import { SafeAreaView, View } from "react-native";
-import { useState } from "react";
 
 export default withLoadingOverlay = (ComponentToWrap) => (props) => {
   overlayVisible = props?.overlayVisible ? props.overlayVisible : false;
@@ -12,7 +11,6 @@ export default withLoadingOverlay = (ComponentToWrap) => (props) => {
           <ActivityIndicator size="large" />
         </View>
       </Modal>
-
       <ComponentToWrap {...props}></ComponentToWrap>
     </SafeAreaView>
   );
@@ -23,7 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // marginTop: 22,
     backgroundColor: "rgba(255, 255, 255, 0.9)",
   },
 });

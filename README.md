@@ -2,6 +2,14 @@
 
 Vurm is a WIP mobile frontend training project, which implements [Snake](<https://en.wikipedia.org/wiki/Snake_(video_game_genre)>) in React Native with a simple leaderboard system enabled by [Google's Firebase Realtime Database](https://firebase.google.com/docs/database) and [OpenID Connect](https://docs.expo.dev/versions/latest/sdk/auth-session/) for both authentication and authorization.
 
+<p align="center" float="left">
+<img src="assets/screenshots/main_menu.png" width=20% height=20%>
+<img src="assets/screenshots/game.png" width=20% height=20%>
+<img src="assets/screenshots/leaderboard_logged_in.png" width=20% height=20%>
+<img src="assets/screenshots/leaderboard_logged_out.png" width=20% height=20%>
+
+<p/>
+
 ## Motivation
 
 The project was started as a way for the contributor(s) to gain experience with cross-platform mobile frontend development, using [React Native](https://reactnative.dev/) and JavaScript for development, and [react-native-testing-library](https://callstack.github.io/react-native-testing-library/docs/getting-started/) and [Jest](https://jestjs.io/) for testing. The project is managed with the [Expo CLI](https://jestjs.io/), in contrast to the [React Native CLI](https://reactnative.dev/docs/environment-setup#development-os). However, the project can easily be [ejected](https://docs.expo.dev/expokit/eject/), and the project has progressed far enough that the application is no longer restricted to simulation through the Expo Go application as a [managed application](https://docs.expo.dev/introduction/managed-vs-bare/), but is built with the [expo run](https://blog.expo.dev/introducing-expo-run-commands-835ae8da4813)-command, to run as a standalone application during development. As an example, simulating through the Expo Go application breaks the ability use the OpenID Connect feature, as Expo Go will be the application which makes the corresponding calls to the OAuth 2.0 APIs of the social login providers.

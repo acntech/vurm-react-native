@@ -5,6 +5,12 @@ import { coordToIdx } from "../utilities/conversion";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import deepcopy from "deepcopy";
+import {
+  HIGHLIGHT_COLOR,
+  ODD_COLOR,
+  PRIMARY_COLOR,
+  PRIMARY_TEXT_COLOR,
+} from "../colors";
 
 export default Grid = ({ snakeCoords, berryCoord }) => {
   const [gridData, setGridData] = useState(createInitializedGridData());
@@ -106,17 +112,17 @@ const createInitializedGridData = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "coral",
+    backgroundColor: PRIMARY_COLOR,
   },
 
   item: {
-    backgroundColor: "coral",
+    backgroundColor: PRIMARY_COLOR,
     padding: 1,
     flexGrow: 1,
     marginVertical: 0.5,
     marginHorizontal: 0.5,
   },
-  snakeBody: { backgroundColor: "white" },
-  snakeHead: { backgroundColor: "silver" },
-  berry: { backgroundColor: "purple" },
+  snakeBody: { backgroundColor: PRIMARY_TEXT_COLOR },
+  snakeHead: { backgroundColor: HIGHLIGHT_COLOR },
+  berry: { backgroundColor: ODD_COLOR },
 });

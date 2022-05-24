@@ -84,13 +84,13 @@ export default SocialLogin = () => {
           <FacebookLoginButton
             setUser={setUser}
             setDisabled={setLoginInProgress}
-            buttonViewStyle={{ alignSelf: "center" }}
+            buttonViewStyle={styles.centered}
             disabled={loginInProgress}
           />
           <GoogleLoginButton
             setUser={setUser}
             setDisabled={setLoginInProgress}
-            buttonViewStyle={{ alignSelf: "center" }}
+            buttonViewStyle={styles.centered}
             disabled={loginInProgress}
           ></GoogleLoginButton>
         </View>
@@ -105,19 +105,19 @@ export default SocialLogin = () => {
           </Text> */}
 
           <Button
-            style={{ alignSelf: "center" }}
+            style={styles.centered}
             title={"Sign Out"}
             onPress={onPressSignOut}
           ></Button>
           {!deleteMyDataButtonDisabled ? (
             <Button
-              style={{ alignSelf: "center" }}
+              style={styles.centered}
               title={"Delete My Data"}
               color={"red"}
               onPress={onPressDeleteMyData}
             ></Button>
           ) : (
-            <Text style={{ alignSelf: "center" }}>
+            <Text style={styles.centered}>
               No data stored for {user.displayName}
             </Text>
           )}
@@ -128,7 +128,5 @@ export default SocialLogin = () => {
 };
 
 const styles = StyleSheet.create({
-  // head: { height: 40, backgroundColor: "coral" },
-  text: { margin: 6, color: "coral", textAlign: "center" },
-  wrapper: { flexDirection: "row" },
+  centered: { alignSelf: "center" },
 });

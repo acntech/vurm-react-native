@@ -5,6 +5,12 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
+import {
+  PRIMARY_COLOR,
+  PRIMARY_TEXT_COLOR,
+  SECONDARY_COLOR,
+  SECONDARY_TEXT_COLOR,
+} from "../colors";
 import { GAME_TITLE } from "../constants";
 
 export const startGameLabel = "Start Game";
@@ -66,13 +72,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     minWidth: "50%",
     borderWidth: 0,
-    backgroundColor: "oldlace",
   },
   primaryButton: {
-    backgroundColor: "coral",
+    backgroundColor: PRIMARY_COLOR,
   },
   secondaryButton: {
-    backgroundColor: "oldlace",
+    backgroundColor: SECONDARY_COLOR,
   },
   buttonLabel: {
     fontSize: 16,
@@ -80,10 +85,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   primaryButtonLabel: {
-    color: "white",
+    color: PRIMARY_TEXT_COLOR,
   },
   secondaryButtonLabel: {
-    color: "coral",
+    color: SECONDARY_TEXT_COLOR,
   },
   gameTitle: {
     textAlign: "center",

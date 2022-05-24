@@ -1,6 +1,14 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { Table, Row } from "react-native-table-component";
 import deepcopy from "deepcopy";
+import {
+  HIGHLIGHT_COLOR,
+  HIGHLIGHT_TEXT_COLOR,
+  PRIMARY_COLOR,
+  PRIMARY_TEXT_COLOR,
+  SECONDARY_COLOR,
+  SECONDARY_TEXT_COLOR,
+} from "../colors";
 const columnFlex = [1, 5, 1];
 
 export default ScoreTable = ({
@@ -17,7 +25,7 @@ export default ScoreTable = ({
   return (
     <View style={{ flex: 1 }}>
       <View>
-        <Table borderStyle={{ borderWidth: 0, borderColor: "white" }}>
+        <Table borderStyle={{ borderWidth: 0 }}>
           <Row
             flexArr={columnFlex}
             data={["Rank", "Nickname", "Score"]}
@@ -69,10 +77,10 @@ export default ScoreTable = ({
 };
 
 export const styles = StyleSheet.create({
-  head: { height: 40, backgroundColor: "coral" },
-  headText: { color: "white", textAlign: "center" },
-  highlighted: { backgroundColor: "grey" },
-  highlightedText: { color: "white" },
-  row: { backgroundColor: "oldlace" },
-  rowText: { margin: 6, color: "coral", textAlign: "center" },
+  head: { height: 40, backgroundColor: PRIMARY_COLOR },
+  headText: { color: PRIMARY_TEXT_COLOR, textAlign: "center" },
+  highlighted: { backgroundColor: HIGHLIGHT_COLOR },
+  highlightedText: { color: HIGHLIGHT_TEXT_COLOR },
+  row: { backgroundColor: SECONDARY_COLOR },
+  rowText: { margin: 6, color: SECONDARY_TEXT_COLOR, textAlign: "center" },
 });

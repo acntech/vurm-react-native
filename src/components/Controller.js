@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_TEXT_COLOR } from "../colors";
 import { unicodeArrowToButtonLabelDirection } from "../utilities/conversion";
 
 export default Controller = ({ setSnakeDirection: setDirectionCallback }) => {
@@ -79,7 +80,7 @@ const styles = new StyleSheet.create({
   button: {
     padding: 20,
     borderRadius: 10000,
-    backgroundColor: "coral",
+    backgroundColor: PRIMARY_COLOR,
     alignSelf: "center",
     margin: 20,
     minWidth: "50.3%",
@@ -87,7 +88,7 @@ const styles = new StyleSheet.create({
   buttonLabel: {
     fontSize: 15,
     fontWeight: "900",
-    color: "white",
+    color: PRIMARY_TEXT_COLOR,
     textAlign: "center",
   },
 });

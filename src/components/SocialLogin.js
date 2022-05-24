@@ -18,15 +18,15 @@ export default SocialLogin = () => {
   const [deleteMyDataButtonDisabled, setDeleteMyDataButtonDisabled] =
     useState(true);
 
-  const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
-    setUser(user);
-  });
-
   useEffect(() => {
     const usersReferenceOrderedByScore = query(
       getUsersReference(),
       orderByChild("score")
     );
+
+    const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
 
     const unsubscribeUserData = onValue(
       usersReferenceOrderedByScore,
@@ -96,14 +96,6 @@ export default SocialLogin = () => {
         </View>
       ) : (
         <View>
-          {/* <HorizontalSeparator
-            text={` ${user.displayName}  `}
-          ></HorizontalSeparator> */}
-          {/* 
-          <Text style={{ alignSelf: "center" }}>
-            Signed in as {user?.displayName}
-          </Text> */}
-
           <Button
             style={styles.centered}
             title={"Sign Out"}

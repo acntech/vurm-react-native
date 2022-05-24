@@ -65,7 +65,6 @@ export const getUserProperty = async (
 };
 
 export const extractDataFromUsersSnapshot = (usersSnapshot, userUid, topN) => {
-  console.log("extract");
   let processedData = [];
   if (!usersSnapshot.hasChildren()) {
     return processedData;

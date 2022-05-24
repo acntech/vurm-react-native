@@ -19,11 +19,11 @@ export default Leaderboard = () => {
     orderByChild("score")
   );
 
-  const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
-    setUid(user?.uid);
-  });
-
   useEffect(() => {
+    const unsubscribeOnAuthStateChanged = onAuthStateChanged(auth, (user) => {
+      setUid(user?.uid);
+    });
+
     const unsubscribeTopData = onValue(
       allUsersReferenceOrderedByScore,
       async (usersSnapshot) => {

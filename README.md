@@ -26,7 +26,7 @@ These installation guidelines has as scope to get Expo CLI up and running on you
 If you have an M1 Mac and failing to build the project, consider [running Xcode under Rosetta](https://www.macworld.com/article/338843/how-to-force-a-native-m1-mac-app-to-run-as-an-intel-app-instead.html). Custom code has been added to the project in an attempt to circumvent this necessity.
 
 ## Running
-
+### Application
 To run the project in a simulator, `cd` into the project's root folder and run
 
 ```shell
@@ -34,6 +34,11 @@ $ yarn install && expo run:ios
 ```
 
 If you instead decide to use `npm` you will need to replace the `yarn`-command above with its corresponding counterpart.
+### Tests
+To run automated tests, `cd` into the project's root folder and run
+```shell
+$ yarn jest
+```
 
 ## Known issues
 

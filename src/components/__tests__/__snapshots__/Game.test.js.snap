@@ -14500,7 +14500,7 @@ exports[`<Game /> renders correctly 1`] = `
                 },
                 false,
                 Object {
-                  "backgroundColor": "silver",
+                  "backgroundColor": "gray",
                 },
               ]
             }

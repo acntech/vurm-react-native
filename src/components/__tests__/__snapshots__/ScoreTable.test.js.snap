@@ -15,7 +15,7 @@ exports[`<ScoreTable /> renders correctly 1`] = `
           undefined,
           Object {
             "borderBottomWidth": 0,
-            "borderColor": "white",
+            "borderColor": "#000",
             "borderLeftWidth": 0,
           },
         ]
@@ -41,7 +41,7 @@ exports[`<ScoreTable /> renders correctly 1`] = `
           style={
             Array [
               Object {
-                "borderColor": "white",
+                "borderColor": "#000",
                 "borderRightWidth": 0,
                 "borderTopWidth": 0,
               },
@@ -78,7 +78,7 @@ exports[`<ScoreTable /> renders correctly 1`] = `
           style={
             Array [
               Object {
-                "borderColor": "white",
+                "borderColor": "#000",
                 "borderRightWidth": 0,
                 "borderTopWidth": 0,
               },
@@ -115,7 +115,7 @@ exports[`<ScoreTable /> renders correctly 1`] = `
           style={
             Array [
               Object {
-                "borderColor": "white",
+                "borderColor": "#000",
                 "borderRightWidth": 0,
                 "borderTopWidth": 0,
               },
@@ -643,7 +643,7 @@ exports[`<ScoreTable /> renders correctly 1`] = `
                   "backgroundColor": "oldlace",
                 },
                 Object {
-                  "backgroundColor": "grey",
+                  "backgroundColor": "gray",
                 },
               ],
             ]
